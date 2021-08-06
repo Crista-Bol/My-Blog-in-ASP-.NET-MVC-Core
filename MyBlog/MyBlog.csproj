@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp5</TargetFramework>
+	<UserSecretsId>90f3e609-8812-444a-b00b-5da7734999cf</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,5 +18,4 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     
   </ItemGroup>
-
 </Project>
