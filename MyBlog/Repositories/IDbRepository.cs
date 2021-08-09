@@ -6,10 +6,14 @@ namespace MyBlog.Repositories
 {
     public interface IDbRepository
     {
-        Task<IEnumerable<Article>> GetArticles();
+        Task<IEnumerable<Article>> GetArticlesAsync();
 
-        Task<Article> GetArticle(int id);
+        Task<Article> GetArticleAsync(int id);
 
-        Task DeleteArticle(Article article);
+        Task CreateArticleAsync(Article article);
+
+        Task UpdateArticleAsync(Article article);
+
+        Task DeleteArticleAsync(Article article);
     }
 }

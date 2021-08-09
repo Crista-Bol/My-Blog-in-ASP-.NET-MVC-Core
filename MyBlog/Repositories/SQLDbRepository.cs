@@ -16,17 +16,29 @@ namespace MyBlog.Repositories
             _db = db;
         }
 
-        public async Task<IEnumerable<Article>> GetArticles()
+        public async Task<IEnumerable<Article>> GetArticlesAsync()
         {
             return await _db.Articles.ToListAsync();
         }
 
-        public async Task<Article> GetArticle(int id) {
+        public async Task<Article> GetArticleAsync(int id) {
 
             return await _db.Articles.FirstOrDefaultAsync(article=>article.Id==id);
         }
 
-        public async Task DeleteArticle(Article article)
+        public async Task CreateArticleAsync(Article article)
+        {
+           await _db.Articles.AddAsync(article);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task UpdateArticleAsync(Article article)
+        {
+            _db.Articles.Update(article);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task DeleteArticleAsync(Article article)
         {
 
              _db.Articles.Remove(article);

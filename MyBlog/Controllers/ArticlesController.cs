@@ -13,10 +13,14 @@ namespace MyBlog.Controllers
     {
 
         private readonly IDbRepository repository;
+        private readonly ApplicationDbContext _db;
 
+        [BindProperty]
+        public Article Article { get; set; }
        
-        public ArticlesController(IDbRepository repository)
+        public ArticlesController(IDbRepository repository,ApplicationDbContext db)
         {
+            _db = db;
             this.repository = repository;
         }
 
@@ -26,23 +30,60 @@ namespace MyBlog.Controllers
             return View();
         }
 
+        public IActionResult Upsert(int? Id) {
+
+            Article = new Article();
+
+            if (Id != null)
+            {
+                Article = (repository.GetArticleAsync((int)Id)).Result;
+
+                if (Article == null)
+                    NotFound();
+            }
+
+            return View(Article);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upsert()
+        {
+            if (ModelState.IsValid) {
+
+                if (Article.Id != 0)
+                {
+                    await repository.UpdateArticleAsync(Article);
+                   
+                }
+                else
+                {
+                   await repository.CreateArticleAsync(Article);
+                   
+                }
+                return RedirectToAction("Index");
+            }
+
+            return View(Article);
+        }
+
         [HttpGet]
         public async Task<IActionResult> getAll()
         {
-            return Json(new { data = await repository.GetArticles()});
+            return Json(new { data = await repository.GetArticlesAsync()});
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id) {
 
-            Article article=await repository.GetArticle(id);
+            Article article=await repository.GetArticleAsync(id);
 
             if (article == null)
             {
                 return Json(new { success=false, message="Not successful"});
             }
 
-            await repository.DeleteArticle(article);
+            await repository.DeleteArticleAsync(article);
 
             return Json(new { success=true, message="Successfull!!"});
 
