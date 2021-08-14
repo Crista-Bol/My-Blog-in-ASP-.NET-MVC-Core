@@ -18,7 +18,7 @@ namespace MyBlog.Repositories
 
         public async Task<IEnumerable<Article>> GetArticlesAsync()
         {
-            return await _db.Articles.ToListAsync();
+            return await _db.Articles.OrderByDescending(a=>a.Created_Date).ToListAsync();
         }
 
         public async Task<Article> GetArticleAsync(int id) {

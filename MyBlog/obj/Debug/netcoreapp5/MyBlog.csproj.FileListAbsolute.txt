@@ -444,3 +444,5 @@ C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\refs\WindowsBase
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\Microsoft.Extensions.DependencyModel.dll
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Admin\Create.cshtml.g.cs
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Admin\Index.cshtml.g.cs

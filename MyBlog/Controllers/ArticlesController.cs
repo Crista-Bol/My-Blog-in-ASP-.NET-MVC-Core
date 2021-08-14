@@ -33,6 +33,7 @@ namespace MyBlog.Controllers
         public IActionResult Upsert(int? Id) {
 
             Article = new Article();
+            
 
             if (Id != null)
             {

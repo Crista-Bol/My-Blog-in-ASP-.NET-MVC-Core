@@ -17,20 +17,28 @@ function loadDataTable() {
         "columns": [
             { "data": "header", "width": "20%" },
             { "data": "body", "width": "20%" },
-            { "data": "created_Date", "width": "20%" },
-            { "data": "published", "width": "20%" },
+            { "data": "created_Date", "width": "15%" },
+            {
+                "data": "published",
+                "render": function (data) {
+                    return `<div class="text-center">
+                            ${data ? '<span style="color:green"><i class="fas fa-check"></i></span>':''}
+                        </div>
+                            `
+                },
+                "width": "5%"
+            },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                         <div class="text-center">
-                            <a class="btn btn-success text-white" href="/Articles/Upsert?id=${data}">Edit</a>
-                        </div>
-                        <div class="text-center">
-                            <a class="btn btn-danger text-white" onclick=Delete('/Articles/Delete?id='+${data})>Delete</a>
+                            <a class='btn btn-success text-white style='cursor:pointer; width:70px' href="/Articles/Upsert?id=${data}">Edit</a>
+                            &nbsp;
+                            <a class='btn btn-danger text-white' style='cursor:pointer; width:70px;' onclick=Delete('/Articles/Delete?id='+${data})>Delete</a>
                         </div>
                     `
-                }, "width": "20%"
+                }, "width": "40%"
             }
         ],
         "language": {

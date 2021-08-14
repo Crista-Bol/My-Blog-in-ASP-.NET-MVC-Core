@@ -17,6 +17,8 @@ namespace MyBlog.Models
         [Required]
         public string Body { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString ="0:dd-MM-yyyy")]
         public DateTime Created_Date { get; set; }
 
         public bool published { get; set; }
