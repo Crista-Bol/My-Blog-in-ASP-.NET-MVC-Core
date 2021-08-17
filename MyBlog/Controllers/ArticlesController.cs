@@ -13,14 +13,14 @@ namespace MyBlog.Controllers
     {
 
         private readonly IDbRepository repository;
-        private readonly ApplicationDbContext _db;
-
+        
         [BindProperty]
         public Article Article { get; set; }
-       
+
+               
         public ArticlesController(IDbRepository repository,ApplicationDbContext db)
         {
-            _db = db;
+     
             this.repository = repository;
         }
 
@@ -28,6 +28,13 @@ namespace MyBlog.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+        [Route("published")]
+        [HttpGet]
+        public async Task<IActionResult> PublishedArticles()
+        {
+            var articles=await repository.GetArticlesAsync(published: true);
+            return View(articles);
         }
 
         public IActionResult Upsert(int? Id) {
@@ -71,7 +78,7 @@ namespace MyBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> getAll()
         {
-            return Json(new { data = await repository.GetArticlesAsync()});
+            return Json(new { data = await repository.GetArticlesAsync(null)});
         }
 
         [HttpDelete]
