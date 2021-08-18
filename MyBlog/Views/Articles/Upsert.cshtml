@@ -1,5 +1,7 @@
 ﻿@model MyBlog.Models.Article
-
+@{
+    var published = (Boolean)ViewData["isPublished"];
+}
 <br />
 <h2 class="text-info">@(Model.Id!=0? "Edit":"Create") Article</h2>
 <br />
@@ -9,6 +11,7 @@
             @if (Model.Id != 0)
             {
                 <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Published_Date" />
             }
             <div class="form-group row">
                 <div class="col-3">
@@ -30,11 +33,12 @@
             </div>
             <div class="form-group row">
                 <div class="col-3">
-                    <label asp-for="published"></label>
+                    <label>Publish</label>
                 </div>
                 <div class="col-6">
-                    <input type="checkbox" asp-for="published" class="form-control" />
-                    <span asp-validation-for="published" class="text-danger"></span>
+
+                    <input type="checkbox" asp-for="@published" class="form-control" />
+                    <!--<span name="isPublished" class="text-danger"></span>-->
                 </div>
             </div>
             <div class="form-group row">

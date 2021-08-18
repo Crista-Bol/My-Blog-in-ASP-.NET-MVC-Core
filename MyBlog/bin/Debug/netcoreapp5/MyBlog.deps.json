@@ -41,6 +41,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.8",
           "Microsoft.EntityFrameworkCore.Tools": "5.0.8",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.2",
+          "Moment.js": "2.29.1",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "5.0.0.0",
@@ -1235,6 +1236,7 @@
           "Microsoft.NETCore.Platforms": "3.1.0"
         }
       },
+      "Moment.js/2.29.1": {},
       "Newtonsoft.Json/11.0.2": {
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
@@ -4066,6 +4068,13 @@
       "sha512": "sha512-mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
       "path": "microsoft.win32.systemevents/4.7.0",
       "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
+    },
+    "Moment.js/2.29.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CSpZfBYACe5QBFtPRv7k6IS5TZmdcisKFIRdQee1ZINjKl05AlSCTaXn/bo25XUnD82L0vvdEJXH+uv3nKeaiA==",
+      "path": "moment.js/2.29.1",
+      "hashPath": "moment.js.2.29.1.nupkg.sha512"
     },
     "Newtonsoft.Json/11.0.2": {
       "type": "package",

@@ -99,7 +99,14 @@
 .main-wrapper .container {
     max-width: 820px
 }
+.media {
+    display: flex;
+    align-items: flex-start
+}
 
+.media-body {
+    flex: 1
+}
 @media (min-width: 576px) {
     .container {
         max-width: 540px

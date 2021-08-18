@@ -18,8 +18,10 @@ namespace MyBlog.Repositories
 
         public async Task<IEnumerable<Article>> GetArticlesAsync(bool? published)
         {
-           return (published == null)? await _db.Articles.OrderByDescending(a => a.Created_Date).ToListAsync():
-            await _db.Articles.Where(a => a.published == published).OrderByDescending(a => a.Created_Date).ToListAsync();
+            return await _db.Articles.OrderByDescending(a => a.Created_Date).ToListAsync();
+            //return (published == null) ? 
+            //:
+            //await _db.Articles.Where(a => a.published == published).OrderByDescending(a => a.Created_Date).ToListAsync();
         }
 
         public async Task<Article> GetArticleAsync(int id) {

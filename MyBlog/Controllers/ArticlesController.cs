@@ -17,7 +17,7 @@ namespace MyBlog.Controllers
         [BindProperty]
         public Article Article { get; set; }
 
-               
+        
         public ArticlesController(IDbRepository repository,ApplicationDbContext db)
         {
      
@@ -40,7 +40,6 @@ namespace MyBlog.Controllers
         public IActionResult Upsert(int? Id) {
 
             Article = new Article();
-            
 
             if (Id != null)
             {
@@ -48,6 +47,9 @@ namespace MyBlog.Controllers
 
                 if (Article == null)
                     NotFound();
+
+                ViewData["isPublished"] = (Article.Published_Date.HasValue) ? true : false;
+
             }
 
             return View(Article);
@@ -55,19 +57,24 @@ namespace MyBlog.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert()
+        public async Task<IActionResult> Upsert(Boolean published)
         {
             if (ModelState.IsValid) {
 
+                if (!Article.Published_Date.HasValue && published)
+                    Article.Published_Date = DateTimeOffset.UtcNow.DateTime;
+                else
+                {
+                    if (Article.Published_Date.HasValue && !published)
+                        Article.Published_Date = null;
+                }
                 if (Article.Id != 0)
                 {
-                    await repository.UpdateArticleAsync(Article);
-                   
+                    await repository.UpdateArticleAsync(Article);   
                 }
                 else
                 {
                    await repository.CreateArticleAsync(Article);
-                   
                 }
                 return RedirectToAction("Index");
             }

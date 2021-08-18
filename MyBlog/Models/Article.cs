@@ -21,6 +21,10 @@ namespace MyBlog.Models
         [DisplayFormat(DataFormatString ="0:dd-MM-yyyy")]
         public DateTime Created_Date { get; set; }
 
-        public bool published { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString ="0:dd-MM-yyyy")]
+        public DateTime? Published_Date { get; set; }
+
+        public string Image { get; set; }
     }
 }

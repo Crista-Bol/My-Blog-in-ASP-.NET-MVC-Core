@@ -16,17 +16,20 @@ function loadDataTable() {
         },
         "columns": [
             { "data": "header", "width": "20%" },
-            { "data": "body", "width": "20%" },
-            { "data": "created_Date", "width": "15%" },
+            { "data": "body", "width": "40%" },
             {
-                "data": "published",
+                "data": "created_Date",
                 "render": function (data) {
-                    return `<div class="text-center">
-                            ${data ? '<span style="color:green"><i class="fas fa-check"></i></span>':''}
-                        </div>
-                            `
+                    return `${getFormattedDate(data)}`;
                 },
-                "width": "5%"
+                "width": "10%"
+            },
+            {
+                "data": "published_Date",
+                "render": function (data) {
+                    return `${getFormattedDate(data)}`;
+                },
+                "width": "10%"
             },
             {
                 "data": "id",
@@ -38,7 +41,7 @@ function loadDataTable() {
                             <a class='btn btn-danger text-white' style='cursor:pointer; width:70px;' onclick=Delete('/Articles/Delete?id='+${data})>Delete</a>
                         </div>
                     `
-                }, "width": "40%"
+                }, "width": "20%"
             }
         ],
         "language": {
@@ -49,6 +52,13 @@ function loadDataTable() {
     
 }
 
+function getFormattedDate(data) {
+    if (data != null) {
+        var date = new Date(data);
+        return formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+    }
+    return '';
+}
 function Delete(url) {
     swal({
         title: "Are you sure?",
