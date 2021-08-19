@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MyBlog.Models;
 using MyBlog.Repositories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace MyBlog.Controllers
 {
@@ -15,13 +20,19 @@ namespace MyBlog.Controllers
         private readonly IDbRepository repository;
         
         [BindProperty]
-        public Article Article { get; set; }
-
+        public ArticleView ArticleView { get; set; }
         
-        public ArticlesController(IDbRepository repository,ApplicationDbContext db)
+        
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        [BindProperty]
+        public IFormFile ArticleImage { get; set; }
+
+
+        public ArticlesController(IDbRepository repository, IWebHostEnvironment hostEnvironment)
         {
-     
             this.repository = repository;
+            this.webHostEnvironment = hostEnvironment;
         }
 
         [HttpGet]
@@ -39,20 +50,19 @@ namespace MyBlog.Controllers
 
         public IActionResult Upsert(int? Id) {
 
-            Article = new Article();
+            ArticleView = new ArticleView();
 
             if (Id != null)
             {
-                Article = (repository.GetArticleAsync((int)Id)).Result;
+                ArticleView.Article = (repository.GetArticleAsync((int)Id)).Result;
 
-                if (Article == null)
+                if (ArticleView.Article == null)
                     NotFound();
 
-                ViewData["isPublished"] = (Article.Published_Date.HasValue) ? true : false;
-
+                ViewData["isPublished"] = (ArticleView.Article.Published_Date.HasValue) ? true : false;
             }
 
-            return View(Article);
+            return View(ArticleView);
         }
 
         [HttpPost]
@@ -61,25 +71,41 @@ namespace MyBlog.Controllers
         {
             if (ModelState.IsValid) {
 
-                if (!Article.Published_Date.HasValue && published)
-                    Article.Published_Date = DateTimeOffset.UtcNow.DateTime;
+                if (!ArticleView.Article.Published_Date.HasValue && published)
+                    ArticleView.Article.Published_Date = DateTimeOffset.UtcNow.DateTime;
                 else
                 {
-                    if (Article.Published_Date.HasValue && !published)
-                        Article.Published_Date = null;
+                    if (ArticleView.Article.Published_Date.HasValue && !published)
+                        ArticleView.Article.Published_Date = null;
                 }
-                if (Article.Id != 0)
+
+                //For image name creation
+                if (ArticleView.Image != null)
                 {
-                    await repository.UpdateArticleAsync(Article);   
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + ArticleView.Image.FileName;
+                    ArticleView.Article.Image = uniqueFileName;
+
+                    string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "img");
+                    string filePath = Path.Combine(uploadsFolder, ArticleView.Article.Image);
+                    var fileStream = new FileStream(filePath, FileMode.Create);
+                        
+                        ArticleView.Image.CopyTo(fileStream);
+                    
+                    
+            }
+
+                if (ArticleView.Article.Id != 0)
+                {
+                    await repository.UpdateArticleAsync(ArticleView.Article);   
                 }
                 else
                 {
-                   await repository.CreateArticleAsync(Article);
+                   await repository.CreateArticleAsync(ArticleView.Article);
                 }
                 return RedirectToAction("Index");
             }
 
-            return View(Article);
+            return View(ArticleView);
         }
 
         [HttpGet]

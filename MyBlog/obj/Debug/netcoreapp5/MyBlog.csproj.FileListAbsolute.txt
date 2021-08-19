@@ -447,3 +447,9 @@ C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\Microsoft.Extens
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Admin\Create.cshtml.g.cs
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Admin\Index.cshtml.g.cs
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Articles\PublishedArticles.cshtml.g.cs
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\System.Web.Razor.dll
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\System.Web.Helpers.dll
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\System.Web.WebPages.Deployment.dll
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\System.Web.WebPages.Razor.dll
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\System.Web.WebPages.dll
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\Microsoft.Web.Infrastructure.dll

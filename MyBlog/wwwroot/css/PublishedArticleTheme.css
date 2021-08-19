@@ -55,7 +55,18 @@
 .profile-image {
     max-width: 160px
 }
+.mr-3 {
+    margin-right: 1rem !important
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto
+}
 
+.blog-list .item .post-thumb {
+    max-width: 110px;
+    border-radius: 2px
+}
 .bio {
     font-size: 0.875rem
 }
@@ -103,6 +114,39 @@
     display: flex;
     align-items: flex-start
 }
+.meta {
+    color: #8f8f8f;
+    font-size: 0.8125rem
+}
+
+    .meta span {
+        display: inline-block
+    }
+
+        .meta span a {
+            color: #8f8f8f
+        }
+
+            .meta span a:hover {
+                color: #4f4f4f
+            }
+
+        .meta span:after {
+            content: "";
+            display: inline-block;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #8f8f8f;
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+            position: relative;
+            top: -3px
+        }
+
+        .meta span:last-child:after {
+            display: none
+        }
 
 .media-body {
     flex: 1
@@ -971,5 +1015,6 @@
     .offset-xl-11 {
         margin-left: 91.6666666667%
     }
+
 }
 
