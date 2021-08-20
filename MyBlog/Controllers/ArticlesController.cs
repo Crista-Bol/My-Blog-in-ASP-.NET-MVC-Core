@@ -40,7 +40,7 @@ namespace MyBlog.Controllers
         {
             return View();
         }
-        [Route("published")]
+        
         [HttpGet]
         public async Task<IActionResult> PublishedArticles()
         {
@@ -92,7 +92,7 @@ namespace MyBlog.Controllers
                         ArticleView.Image.CopyTo(fileStream);
                     
                     
-            }
+                }
 
                 if (ArticleView.Article.Id != 0)
                 {

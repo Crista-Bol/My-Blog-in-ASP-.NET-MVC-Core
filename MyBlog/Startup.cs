@@ -81,7 +81,7 @@ namespace MyBlog
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Articles}/{action=PublishedArticles}");
 
                 endpoints.MapRazorPages();
             });

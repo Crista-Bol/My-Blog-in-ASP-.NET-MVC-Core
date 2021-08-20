@@ -67,6 +67,13 @@
     max-width: 110px;
     border-radius: 2px
 }
+.d-none {
+    display: none !important
+}
+.d-md-flex {
+    display: flex !important
+}
+
 .bio {
     font-size: 0.875rem
 }

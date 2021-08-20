@@ -16,7 +16,7 @@ function loadDataTable() {
         },
         "columns": [
             { "data": "header", "width": "20%" },
-            { "data": "body", "width": "40%" },
+            { "data": "body", "width": "35%" },
             {
                 "data": "created_Date",
                 "render": function (data) {
@@ -27,9 +27,16 @@ function loadDataTable() {
             {
                 "data": "published_Date",
                 "render": function (data) {
-                    return `${getFormattedDate(data)}`;
+                    return `${getFormattedDate(data)}`;  
                 },
                 "width": "10%"
+            },
+            {
+                "data": "image",
+                "render": function (data) {
+                    return (data != null && data!='') ? `<span style="color:green;"><i class="fas fa-check"></i></span>` : ``;
+                },
+                "width": "5%"
             },
             {
                 "data": "id",
