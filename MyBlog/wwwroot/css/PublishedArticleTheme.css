@@ -99,6 +99,44 @@
 .list-inline-item:not(:last-child) {
     margin-right: .5rem
 }
+
+/* Tooltip container */
+.wt {
+    color: blue;
+}
+    /* Tooltip text */
+    .wt .wtSummary {
+        visibility: hidden;
+        top: 80%;
+        width: 80px;
+        margin-left: -40px;
+        background-color: white;
+        color: blue;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 10px;
+        /* Position the tooltip text - see examples below! */
+        position: absolute;
+        z-index: 1;
+    }
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.wt:hover .wtSummary {
+    visibility: visible;
+}
+
+.wt .wtSummary::after {
+    content: " ";
+    position: absolute;
+    
+    bottom: 100%; /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent blue transparent;
+}
+
 .social-list a {
     width: 32px;
     height: 32px;

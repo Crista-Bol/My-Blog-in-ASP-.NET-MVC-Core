@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MyBlog.Models;
 using System;
@@ -17,6 +18,7 @@ namespace MyBlog.Controllers
         private readonly ILogger<HomeController> _logger;
 
         private readonly WeatherClient weatherClient;
+
 
         public HomeController(ILogger<HomeController> logger,WeatherClient weatherClient)
         {
