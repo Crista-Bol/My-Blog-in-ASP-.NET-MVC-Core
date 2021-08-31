@@ -19,7 +19,6 @@ namespace MyBlog.Controllers
 
         private readonly WeatherClient weatherClient;
 
-
         public HomeController(ILogger<HomeController> logger,WeatherClient weatherClient)
         {
             _logger = logger;
@@ -36,6 +35,11 @@ namespace MyBlog.Controllers
             return View();
         }
 
+        public IActionResult AboutMe()
+        {
+            return View();
+        }
+                
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -453,3 +453,5 @@ C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\System.Web.WebPa
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\System.Web.WebPages.Razor.dll
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\System.Web.WebPages.dll
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\Microsoft.Web.Infrastructure.dll
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Home\AboutMe.cshtml.g.cs
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Articles\Detail.cshtml.g.cs

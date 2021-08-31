@@ -48,7 +48,7 @@
                                     @if (article.Body.Length > 0)
                                         @(article.Body.Length>150 ? article.Body.Substring(0,150):article.Body)
                                 </div>
-                                <a class="more-link" asp-action="Upsert" asp-route-Id="@article.Id">Read more &rarr;</a>
+                                <a class="more-link" asp-action="Detail" asp-route-Id="@article.Id">Read more &rarr;</a>
                             </div>
                         </div>
                     </div>

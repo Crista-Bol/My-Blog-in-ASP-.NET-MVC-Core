@@ -45,7 +45,23 @@ namespace MyBlog.Controllers
         public async Task<IActionResult> PublishedArticles()
         {
             var articles=await repository.GetArticlesAsync(published: true);
+            
             return View(articles);
+        }
+
+        public IActionResult Detail(int Id) {
+            
+            ArticleView = new ArticleView();
+            ArticleView.Article = (repository.GetArticleAsync((int)Id)).Result;
+
+            DateTime now=DateTime.Now;
+            DateTime aMonthAgo=now.AddMonths(-1);
+            if (ArticleView.Article.Published_Date > aMonthAgo) {
+                ViewData["publishedDate"] = "on "+ArticleView.Article.Published_Date;
+            } else {
+                ViewData["publishedDate"] = (now.Month - ArticleView.Article.Published_Date.Value.Month)+" ago";
+            } 
+            return View(ArticleView);
         }
 
         public IActionResult Upsert(int? Id) {
