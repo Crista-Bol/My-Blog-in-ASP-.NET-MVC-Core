@@ -7,10 +7,12 @@ namespace MyBlog.Repositories
     public interface IDbRepository
     {
         Task<IEnumerable<Article>> GetArticlesAsync(bool? published);
+        Task<IEnumerable<Comment>> GetCommentsAsync();
 
         Task<Article> GetArticleAsync(int id);
 
         Task CreateArticleAsync(Article article);
+        Task CreateCommentAsync(Comment comment);
 
         Task UpdateArticleAsync(Article article);
 

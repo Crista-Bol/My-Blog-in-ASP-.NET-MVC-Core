@@ -9,7 +9,7 @@
 <h1>Detail</h1>
 
 <div class="main-wrapper">
-
+    <input type="hidden" id="articleId" value="@Model.Article.Id" />
     <article class="blog-post px-3 py-5 p-md-5">
         <div class="container">
             <header class="blog-post-header">
@@ -28,5 +28,21 @@
     </article>
     <div>
 
+        <label for="txtName">Your name</label>
+        <input type="text" id="Commenter" name="Commenter" />
+
+        <label for="txtAge">Comment</label>
+        <textarea row="3" cols="10" id="Detail" name="Detail"></textarea>
+        <a id="sendButton">Send</a>
+    </div>
+
+    <div id="commentList">
+        <ul></ul>
+    </div>
+    <div>
         <a asp-action="Index">Back to List</a>
     </div>
+</div>
+@section Scripts{
+    <script src="~/js/ArticleList.js"></script>
+}

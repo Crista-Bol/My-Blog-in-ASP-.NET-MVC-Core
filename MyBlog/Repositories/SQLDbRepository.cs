@@ -23,6 +23,10 @@ namespace MyBlog.Repositories
                 await _db.Articles.Where(a => a.Published_Date != null).OrderByDescending(a => a.Created_Date).ToListAsync() :
                 await _db.Articles.OrderByDescending(a => a.Created_Date).ToListAsync();
         }
+        public async Task<IEnumerable<Comment>> GetCommentsAsync()
+        {
+            return await _db.Comments.ToListAsync();
+        }
 
         public async Task<Article> GetArticleAsync(int id) {
 
@@ -32,6 +36,11 @@ namespace MyBlog.Repositories
         public async Task CreateArticleAsync(Article article)
         {
            await _db.Articles.AddAsync(article);
+            await _db.SaveChangesAsync();
+        }
+        public async Task CreateCommentAsync(Comment comment)
+        {
+            await _db.Comments.AddAsync(comment);
             await _db.SaveChangesAsync();
         }
 

@@ -26,5 +26,7 @@ namespace MyBlog.Models
         public DateTime? Published_Date { get; set; }
 
         public string Image { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }

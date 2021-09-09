@@ -1,8 +1,45 @@
-﻿var dataTable;
+﻿
+document.getElementById("sendButton").onclick = function () {
+    myFunction()
+};
+
+
+function loadCommentList() {
+    
+        $.ajax({
+            "url": "/Articles/commentList",
+            "type": "GET",
+            "datatype": "json",
+            "success": function (data) {
+
+                $.each(data.data, function () {
+                    $("#commentList > ul").append("<li>" + this.commenter + "</li>");
+                    
+                });       
+            }
+            
+        });
+}
+function myFunction() {
+    var commenter = document.getElementById("Commenter").value;
+    var detail = document.getElementById("Detail").value;
+    var articleId = document.getElementById("articleId").value;
+    $.ajax({
+        type: "POST",
+        url: "/Articles/SendComment?commenter="+commenter+"&detail=" + detail + "&articleId=" + articleId,
+        success: function (data) {
+            loadCommentList();
+            
+        }
+    });
+}
+
+var dataTable;
 
 $(document).ready(
     function () {
         loadDataTable();
+        loadCommentList();
     });
 
 

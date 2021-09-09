@@ -28,6 +28,8 @@ namespace MyBlog.Controllers
         [BindProperty]
         public IFormFile ArticleImage { get; set; }
 
+        [BindProperty]
+        public Comment newComment { get; set; }
 
         public ArticlesController(IDbRepository repository, IWebHostEnvironment hostEnvironment)
         {
@@ -67,6 +69,7 @@ namespace MyBlog.Controllers
         public IActionResult Upsert(int? Id) {
 
             ArticleView = new ArticleView();
+            
 
             if (Id != null)
             {
@@ -79,6 +82,28 @@ namespace MyBlog.Controllers
             }
 
             return View(ArticleView);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> commentList()
+        {
+            return  Json(new { data = await repository.GetCommentsAsync()});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendComment(string commenter,string detail,int articleId) {
+
+            newComment = new Comment();
+            newComment.Commenter = commenter;
+            newComment.Detail = detail;
+            
+            if (articleId != null)
+                newComment.Article=repository.GetArticleAsync(articleId).Result;
+            
+            newComment.ArticleId = articleId;
+            await repository.CreateCommentAsync(newComment);
+
+            return Json(new { success = true});
         }
 
         [HttpPost]
