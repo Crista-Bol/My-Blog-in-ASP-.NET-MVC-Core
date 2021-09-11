@@ -24,5 +24,8 @@ namespace MyBlog.Models
         public DateTime Date { get; set; }
 
         public string IP { get; set; }
+
+        public int HeartVoteNumber { get; set; }
+        public int BrokenHeartVoteNumber { get; set; }
     }
 }

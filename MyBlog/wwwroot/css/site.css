@@ -69,3 +69,20 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+.comment-background {
+    background-color: #f7f7f7;
+}
+.comment-header {
+    font: 16px "PT-sans", sans-serif,bold;
+    color: #287DF8;
+    padding-top: 20px;
+    padding-left: 10px;
+}
+.comment-list-header {
+    color: #f7f7f7;
+}
+.comment-list-body {
+    color:#333333;
+    font: 13px Roboto,sans-serif;
+
+}

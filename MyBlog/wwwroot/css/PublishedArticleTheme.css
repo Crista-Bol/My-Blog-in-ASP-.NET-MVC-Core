@@ -1062,7 +1062,21 @@
     }
 
 }
+.media-heading {
+    font-size: 12px;
+    color: grey;
+}
+.media-footer {
+    font-size: 12px;
+    color: grey;
+    margin-bottom: 5px;
+    display:flex;
+    justify-content:flex-start;
 
-#commentList > ul {
-    list-style-type:none;
+}
+.comment-box {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 10px 10px 5px #aaaaaa;
+    
 }

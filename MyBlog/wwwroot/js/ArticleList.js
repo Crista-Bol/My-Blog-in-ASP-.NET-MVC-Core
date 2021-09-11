@@ -3,6 +3,19 @@ document.getElementById("sendButton").onclick = function () {
     myFunction()
 };
 
+function IncHeartNum(Id) {
+    
+    $.ajax({
+        "url": "/Articles/GiveHeart?Id=" + Id,
+        "type": "PUT",
+        "datatype": "json",
+        "success": function (data) {
+
+            $('#heartNumber').html(data.heartNumber);
+        }
+    });
+}
+
 
 function loadCommentList() {
     
@@ -13,7 +26,20 @@ function loadCommentList() {
             "success": function (data) {
 
                 $.each(data.data, function () {
-                    $("#commentList > ul").append("<li>" + this.commenter + "</li>");
+                    $("#commentList").append(
+                        `<div class="comment-box">
+                            <div class="media-heading">${this.commenter} ${(this.ip!=null)?this.ip:' '}</div>
+                            <div class="media-body"><p>${this.detail}</p></div>
+                            <div class="media-footer">
+                                <div class="mr-2"><i class="fas fa-clock"></i>${getFormattedDate(this.date)}</div>
+                                <div class="mr-2"><a id="giveHeart" onclick=IncHeartNum(${this.id})><i class="fas fa-heart" style="color:blue"></i><span id="heartNumber" class="pl-1">${this.heartVoteNumber}</span></a></div>
+                                <div class="mr-2"><a id="giveBrokenHeart"><i class="fas fa-heart-broken" style="color: red"></i><span class="pl-1">${this.brokenHeartVoteNumber}</span></a></div>
+                               
+                            </div>
+                        </div>
+
+                         `);
+                        
                     
                 });       
             }

@@ -33,6 +33,13 @@ namespace MyBlog.Repositories
             return await _db.Articles.FirstOrDefaultAsync(article=>article.Id==id);
         }
 
+
+        public async Task<Comment> GetCommentAsync(int id)
+        {
+
+            return await _db.Comments.FirstOrDefaultAsync(c => c.Id == id);
+        }
+
         public async Task CreateArticleAsync(Article article)
         {
            await _db.Articles.AddAsync(article);
@@ -47,6 +54,12 @@ namespace MyBlog.Repositories
         public async Task UpdateArticleAsync(Article article)
         {
             _db.Articles.Update(article);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task UpdateCommentAsync(Comment comment)
+        {
+            _db.Comments.Update(comment);
             await _db.SaveChangesAsync();
         }
 

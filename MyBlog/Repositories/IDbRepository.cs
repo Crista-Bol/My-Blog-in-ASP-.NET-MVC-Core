@@ -11,6 +11,9 @@ namespace MyBlog.Repositories
 
         Task<Article> GetArticleAsync(int id);
 
+        Task UpdateCommentAsync(Comment comment);
+        Task<Comment> GetCommentAsync(int id);
+
         Task CreateArticleAsync(Article article);
         Task CreateCommentAsync(Comment comment);
 

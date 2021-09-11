@@ -26,23 +26,33 @@
             </div>
         </div>
     </article>
-    <div>
+  @*  <div class="justify-content-center mt-5 border-left border-right" style="background-color:#eef2f5; width:400px">
+        <div class="d-flex justify-content-center pt-3 pb-2"> <input type="text" name="text" placeholder="+ Add a note" class="form-control addtxt"> </div>
+        <div class="d-flex justify-content-center py-2">
+            <div class="second py-2 px-2">
+                <span class="text1">Type your note, and hit enter to add it</span>
+                <div class="d-flex justify-content-between py-1 pt-2">
+                    <div><img src="https://i.imgur.com/AgAC1Is.jpg" width="18"><span class="text2">Martha</span></div>
+                    <div><span class="text3">Upvote?</span><span class="thumbup"><i class="fa fa-thumbs-o-up"></i></span><span class="text4">3</span></div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+       
+        <div>
+            <div class="bg-light">
+                <h5 class="comment-header"><i class="fas fa-comment-dots"></i> Comments </h5>
+                <textarea class="form-control" row="524" cols="76" id="Detail" name="Detail" placeholder="Please write your comment here."></textarea>
 
-        <label for="txtName">Your name</label>
-        <input type="text" id="Commenter" name="Commenter" />
+                <input type="text" class="form-control" id="Commenter" name="Commenter" placeholder="Please write your name." />
 
-        <label for="txtAge">Comment</label>
-        <textarea row="3" cols="10" id="Detail" name="Detail"></textarea>
-        <a id="sendButton">Send</a>
-    </div>
 
-    <div id="commentList">
-        <ul></ul>
+                <a id="sendButton" class="btn btn-primary text-white form-control">Send</a>
+            </div>
+            <div id="commentList" class="mt-5 mb-5 bg-light">
+            </div>
+        </div>
     </div>
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-</div>
-@section Scripts{
-    <script src="~/js/ArticleList.js"></script>
-}
+    @section Scripts{
+        <script src="~/js/ArticleList.js"></script>
+    }
