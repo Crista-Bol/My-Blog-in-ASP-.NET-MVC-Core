@@ -1,72 +1,9 @@
-﻿
-document.getElementById("sendButton").onclick = function () {
-    myFunction()
-};
-
-function IncHeartNum(Id) {
-    
-    $.ajax({
-        "url": "/Articles/GiveHeart?Id=" + Id,
-        "type": "PUT",
-        "datatype": "json",
-        "success": function (data) {
-
-            $('#heartNumber').html(data.heartNumber);
-        }
-    });
-}
-
-
-function loadCommentList() {
-    
-        $.ajax({
-            "url": "/Articles/commentList",
-            "type": "GET",
-            "datatype": "json",
-            "success": function (data) {
-
-                $.each(data.data, function () {
-                    $("#commentList").append(
-                        `<div class="comment-box">
-                            <div class="media-heading">${this.commenter} ${(this.ip!=null)?this.ip:' '}</div>
-                            <div class="media-body"><p>${this.detail}</p></div>
-                            <div class="media-footer">
-                                <div class="mr-2"><i class="fas fa-clock"></i>${getFormattedDate(this.date)}</div>
-                                <div class="mr-2"><a id="giveHeart" onclick=IncHeartNum(${this.id})><i class="fas fa-heart" style="color:blue"></i><span id="heartNumber" class="pl-1">${this.heartVoteNumber}</span></a></div>
-                                <div class="mr-2"><a id="giveBrokenHeart"><i class="fas fa-heart-broken" style="color: red"></i><span class="pl-1">${this.brokenHeartVoteNumber}</span></a></div>
-                               
-                            </div>
-                        </div>
-
-                         `);
-                        
-                    
-                });       
-            }
-            
-        });
-}
-function myFunction() {
-    var commenter = document.getElementById("Commenter").value;
-    var detail = document.getElementById("Detail").value;
-    var articleId = document.getElementById("articleId").value;
-    $.ajax({
-        type: "POST",
-        url: "/Articles/SendComment?commenter="+commenter+"&detail=" + detail + "&articleId=" + articleId,
-        success: function (data) {
-            loadCommentList();
-            
-        }
-    });
-}
-
-var dataTable;
+﻿var dataTable;
 
 $(document).ready(
     function () {
         loadDataTable();
-        loadCommentList();
-    });
+ });
 
 
 function loadDataTable() {

@@ -51,10 +51,10 @@ namespace MyBlog.Controllers
             return View(articles);
         }
 
-        public IActionResult Detail(int Id) {
+        public async Task<IActionResult> Detail(int Id) {
             
             ArticleView = new ArticleView();
-            ArticleView.Article = (repository.GetArticleAsync((int)Id)).Result;
+            ArticleView.Article = await repository.GetArticleAsync((int)Id);
 
             DateTime now=DateTime.Now;
             DateTime aMonthAgo=now.AddMonths(-1);
@@ -62,7 +62,8 @@ namespace MyBlog.Controllers
                 ViewData["publishedDate"] = "on "+ArticleView.Article.Published_Date;
             } else {
                 ViewData["publishedDate"] = (now.Month - ArticleView.Article.Published_Date.Value.Month)+" ago";
-            } 
+            }
+            ArticleView.Comments = await repository.GetCommentsAsync(Id);
             return View(ArticleView);
         }
 
@@ -85,9 +86,9 @@ namespace MyBlog.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> commentList()
+        public async Task<IActionResult> commentList(int articleId)
         {
-            return  Json(new { data = await repository.GetCommentsAsync()});
+            return  Json(new { data = await repository.GetCommentsAsync(articleId) });
         }
 
         [HttpPost]
@@ -98,12 +99,13 @@ namespace MyBlog.Controllers
             newComment.Detail = detail;
             
             if (articleId != null)
-                newComment.Article=repository.GetArticleAsync(articleId).Result;
+                newComment.Article=await repository.GetArticleAsync(articleId);
             
             newComment.ArticleId = articleId;
+            newComment.Date = DateTime.Now;
             await repository.CreateCommentAsync(newComment);
-
-            return Json(new { success = true});
+            
+            return Json(new { success=true});
         }
 
         [HttpPut]
@@ -112,7 +114,7 @@ namespace MyBlog.Controllers
             Comment comment=await repository.GetCommentAsync(Id);
             comment.HeartVoteNumber++;
             await repository.UpdateCommentAsync(comment);
-            return Json(new { heartNumber=comment.HeartVoteNumber });
+            return Json(new { success=true });
         }
 
         [HttpPost]
@@ -165,9 +167,24 @@ namespace MyBlog.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id) {
+        public async Task<IActionResult> DeleteComment(int id) {
 
-            Article article=await repository.GetArticleAsync(id);
+            Comment comment = await repository.GetCommentAsync(id);
+            
+            if (comment == null)
+            {
+                return Json(new { success = false  })  ;
+            }
+            int articleId = comment.ArticleId;
+            await repository.DeleteCommentAsync(comment);
+
+            return Json(new { success=true });
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int Id) {
+
+            Article article=await repository.GetArticleAsync(Id);
 
             if (article == null)
             {

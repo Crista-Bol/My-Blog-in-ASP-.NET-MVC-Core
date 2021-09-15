@@ -13,5 +13,7 @@ namespace MyBlog.Models
 
         [Display(Name ="Image")]
         public IFormFile Image { get; set; }
+
+        public IEnumerable<Comment> Comments { get; set; }
     }
 }

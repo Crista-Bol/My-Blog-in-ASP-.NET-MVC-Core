@@ -7,7 +7,7 @@ namespace MyBlog.Repositories
     public interface IDbRepository
     {
         Task<IEnumerable<Article>> GetArticlesAsync(bool? published);
-        Task<IEnumerable<Comment>> GetCommentsAsync();
+        Task<IEnumerable<Comment>> GetCommentsAsync(int articleId);
 
         Task<Article> GetArticleAsync(int id);
 
@@ -20,5 +20,6 @@ namespace MyBlog.Repositories
         Task UpdateArticleAsync(Article article);
 
         Task DeleteArticleAsync(Article article);
+        Task DeleteCommentAsync(Comment comment);
     }
 }

@@ -23,9 +23,9 @@ namespace MyBlog.Repositories
                 await _db.Articles.Where(a => a.Published_Date != null).OrderByDescending(a => a.Created_Date).ToListAsync() :
                 await _db.Articles.OrderByDescending(a => a.Created_Date).ToListAsync();
         }
-        public async Task<IEnumerable<Comment>> GetCommentsAsync()
+        public async Task<IEnumerable<Comment>> GetCommentsAsync(int articleId)
         {
-            return await _db.Comments.ToListAsync();
+            return await _db.Comments.Where(cm=>cm.ArticleId== articleId).OrderBy(cm=>cm.Date).ToListAsync();
         }
 
         public async Task<Article> GetArticleAsync(int id) {
@@ -67,6 +67,12 @@ namespace MyBlog.Repositories
         {
 
              _db.Articles.Remove(article);
+            await _db.SaveChangesAsync();
+        }
+        public async Task DeleteCommentAsync(Comment comment)
+        {
+
+            _db.Comments.Remove(comment);
             await _db.SaveChangesAsync();
         }
     }
