@@ -117,6 +117,16 @@ namespace MyBlog.Controllers
             return Json(new { success=true });
         }
 
+        [HttpPut]
+        public async Task<IActionResult> GiveBrokenHeart(int Id)
+        {
+
+            Comment comment = await repository.GetCommentAsync(Id);
+            comment.BrokenHeartVoteNumber++;
+            await repository.UpdateCommentAsync(comment);
+            return Json(new { success = true });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(Boolean published)

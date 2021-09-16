@@ -1,7 +1,7 @@
 ﻿@model MyBlog.Models.ArticleView
 @{
     ViewData["Title"] = "Article";
-    var published = (Boolean)ViewData["isPublished"];
+    var published = ViewData["isPublished"];
 }
 <br />
 <h2 class="text-info">@(Model.Article.Id!=0? "Edit":"Create") Article</h2>

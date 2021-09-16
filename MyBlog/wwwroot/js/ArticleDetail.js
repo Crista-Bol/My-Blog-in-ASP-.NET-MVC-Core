@@ -60,7 +60,7 @@ function drawEachComment(id, commenter, ip, detail,date, heartVoteNumber, broken
                     <div class="media-footer">
                         <div class="mr-2"><i class="fas fa-clock mr-1"></i>${getFormattedDate(date)}</div>
                         <div class="mr-2"><a id="giveHeart" onclick=IncHeartNum(${id})> <i class="fas fa-heart" style="color:blue"></i><span id="heartNumber" class="pl-1">${heartVoteNumber}</span></a></div>
-                        <div class="mr-2"><a id="giveBrokenHeart"><i class="fas fa-heart-broken" style="color: red"></i><span class="pl-1">${brokenHeartVoteNumber}</span></a></div>
+                        <div class="mr-2"><a id="giveBrokenHeart" onclick=IncBrokenHeartNum(${id})><i class="fas fa-heart-broken" style="color: red"></i><span class="pl-1">${brokenHeartVoteNumber}</span></a></div>
                         <div class="mr-2"><a onclick=deleteComment(${id})><i class="fas fa-trash-alt" style="color:red"></i></a></div>
                  </div >`;
 }
@@ -95,4 +95,17 @@ function IncHeartNum(id) {
         }
     });
     
+}
+function IncBrokenHeartNum(id) {
+    $.ajax({
+        url: "/Articles/GiveBrokenHeart?Id=" + id,
+        type: "Put",
+        datatype: "json",
+        success: function (data) {
+            if (data.success) {
+                load();
+            }
+        }
+    });
+
 }

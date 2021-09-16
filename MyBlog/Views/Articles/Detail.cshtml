@@ -6,36 +6,48 @@
     var publishedDate = ViewData["publishedDate"];
 
 }
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-lg-12">
+            <input type="hidden" id="articleId" value="@Model.Article.Id" />
+            <article class="blog-post px-3 py-5 p-md-5">
+                <div class="container">
+                    <header class="mb-4">
+                        <h2 class="font-weight-normal mb-1">@Model.Article.Header</h2>
+                        <div class="meta mb-3"><span class="date">Posted on @publishedDate</span><span class="time">5 min read</span><span class="comment"><a href="#">4 comments</a></span></div>
 
-<h1>Detail</h1>
+                        <a class="badge bg-secondary text-decoration-none btn-link text-white" href="#!">Web Design</a>
+                        <a class="badge bg-secondary text-decoration-none text-white" href="#!">Freebies</a>
+                    </header>
 
-<div class="main-wrapper">
-    <input type="hidden" id="articleId" value="@Model.Article.Id" />
-    <article class="blog-post px-3 py-5 p-md-5">
-        <div class="container">
-            <header class="blog-post-header">
-                <h2 class="title mb-2">@Model.Article.Header</h2>
-                <div class="meta mb-3"><span class="date">Published @publishedDate</span><span class="time">5 min read</span><span class="comment"><a href="#">4 comments</a></span></div>
-            </header>
-
-            <div class="blog-post-body">
-                <figure class="blog-banner">
-                    <a href="https://made4dev.com"><img class="img-fluid" src="~/img/@Model.Article.Image" alt="image"></a>
-                    <figcaption class="mt-2 text-center image-caption">Image Credit: <a href="https://made4dev.com?ref=devblog" target="_blank">made4dev.com (Premium Programming T-shirts)</a></figcaption>
-                </figure>
-                <p>@Model.Article.Body</p>
-            </div>
-        </div>
-    </article>
+                    <div class="blog-post-body">
+                        <figure class="mb-4">
+                            <a href="https://made4dev.com"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="image"></a>
+                            <figcaption class="mt-2 text-center image-caption">Image Credit: <a href="https://made4dev.com?ref=devblog" target="_blank">made4dev.com (Premium Programming T-shirts)</a></figcaption>
+                        </figure>
+                        <section class="mb-5"><p class="fs-5">@Model.Article.Body</p></section>
+                    </div>
+                </div>
+            </article>
     
-    <div>
-        <div class="bg-light">
-            <h5 class="comment-header"><i class="fas fa-comment-dots"></i> Comments </h5>
-            <textarea class="form-control" id="dt" name="Detail" placeholder="Please write your comment here."></textarea>
-            <input type="text" class="form-control" id="cmr" name="Commenter" placeholder="Please write your name." />
-            <a id="sendButton" class="btn btn-primary text-white form-control" onclick=addComment(@Model.Article.Id)>Send</a>
-        </div>
-        <div id="commentList" class="mt-5 mb-5 bg-light">    
+            <section class="px-5">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <form class="mb-4">
+                            <div class="row">
+                                <h5 class="comment-header"><i class="fas fa-comment-dots"></i> Comments </h5>
+                                <textarea class="form-control mb-1 mr-4" id="dt" name="Detail" placeholder="Please write your comment here."></textarea>
+                            </div>
+                            <div class="row">
+                                <input type="text" class="form-control mb-1 col-8 mr-2" id="cmr" name="Commenter" placeholder="Please write your name." />
+                                <a id="sendButton" class="btn btn-primary text-white form-control col-2" onclick=addComment(@Model.Article.Id)>Send</a>
+                            </div>
+                        </form>
+                        <div id="commentList" class="mt-5 mb-5 bg-light">
+                        </div> 
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 </div>
