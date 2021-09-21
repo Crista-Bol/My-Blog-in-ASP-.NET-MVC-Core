@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using MyBlog.Areas.Identity.Data;
+using MyBlog.Models;
 
 namespace MyBlog.Areas.Identity.Pages.Account
 {
@@ -25,6 +26,7 @@ namespace MyBlog.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        
 
         public RegisterModel(
             UserManager<MyBlogUser> userManager,
@@ -38,6 +40,7 @@ namespace MyBlog.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            
         }
 
         [BindProperty]
@@ -46,6 +49,8 @@ namespace MyBlog.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+
+        
 
         public class InputModel
         {
@@ -83,7 +88,7 @@ namespace MyBlog.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ViewData["roles"] = _roleManager.Roles.ToList();
-            ReturnUrl = returnUrl;
+            ReturnUrl = Url.Content("~/");//returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -95,36 +100,49 @@ namespace MyBlog.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new MyBlogUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+
+                //Checking same username and email
+                var existingUser=_userManager.FindByEmailAsync(Input.Email);
+                
+                if (existingUser != null)
                 {
-                    _logger.LogInformation("User created a new account with password.");
-                    await _userManager.AddToRoleAsync(user, role.Name);
-
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    ModelState.AddModelError(string.Empty, "Duplicated email!!!");
                 }
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    var result = await _userManager.CreateAsync(user, Input.Password);
+
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User created a new account with password.");
+                        await _userManager.AddToRoleAsync(user, role.Name);
+
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                        var callbackUrl = Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                            protocol: Request.Scheme);
+
+                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                        if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                        {
+                            return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        }
+                        else
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return LocalRedirect(returnUrl);
+                        }
+                    }
+               
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
             ViewData["roles"] = _roleManager.Roles.ToList();

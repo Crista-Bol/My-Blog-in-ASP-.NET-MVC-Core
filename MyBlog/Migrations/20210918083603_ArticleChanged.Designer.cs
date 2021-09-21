@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBlog.Models;
 
 namespace MyBlog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210918083603_ArticleChanged")]
+    partial class ArticleChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -357,16 +359,13 @@ namespace MyBlog.Migrations
 
             modelBuilder.Entity("MyBlog.Models.Comment", b =>
                 {
-                    b.HasOne("MyBlog.Models.Article", null)
-                        .WithMany("Comments")
+                    b.HasOne("MyBlog.Models.Article", "Article")
+                        .WithMany()
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("MyBlog.Models.Article", b =>
-                {
-                    b.Navigation("Comments");
+                    b.Navigation("Article");
                 });
 #pragma warning restore 612, 618
         }

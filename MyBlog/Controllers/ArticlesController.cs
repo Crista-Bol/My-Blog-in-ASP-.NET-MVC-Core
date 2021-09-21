@@ -63,14 +63,14 @@ namespace MyBlog.Controllers
             } else {
                 ViewData["publishedDate"] = (now.Month - ArticleView.Article.Published_Date.Value.Month)+" ago";
             }
-            ArticleView.Comments = await repository.GetCommentsAsync(Id);
+        
             return View(ArticleView);
         }
 
         public IActionResult Upsert(int? Id) {
 
             ArticleView = new ArticleView();
-            
+
 
             if (Id != null)
             {
@@ -79,7 +79,10 @@ namespace MyBlog.Controllers
                 if (ArticleView.Article == null)
                     NotFound();
 
-                ViewData["isPublished"] = (ArticleView.Article.Published_Date.HasValue) ? true : false;
+                ArticleView.Published = (ArticleView.Article.Published_Date != null ? true : false);
+            }
+            else {
+                ArticleView.Article = new Article();
             }
 
             return View(ArticleView);
@@ -98,8 +101,8 @@ namespace MyBlog.Controllers
             newComment.Commenter = commenter;
             newComment.Detail = detail;
             
-            if (articleId != null)
-                newComment.Article=await repository.GetArticleAsync(articleId);
+            /*if (articleId != null)
+                newComment.Article=await repository.GetArticleAsync(articleId);*/
             
             newComment.ArticleId = articleId;
             newComment.Date = DateTime.Now;
@@ -129,32 +132,39 @@ namespace MyBlog.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(Boolean published)
+        public async Task<IActionResult> Upsert()
         {
-            if (ModelState.IsValid) {
+            if (!ArticleView.Article.Published_Date.HasValue && ArticleView.Published)
+                ArticleView.Article.Published_Date = DateTimeOffset.UtcNow.DateTime;
+            else
+            {
+                if (ArticleView.Article.Published_Date.HasValue && !ArticleView.Published)
+                    ArticleView.Article.Published_Date = null;
+            }
 
-                if (!ArticleView.Article.Published_Date.HasValue && published)
-                    ArticleView.Article.Published_Date = DateTimeOffset.UtcNow.DateTime;
-                else
+            //For image name creation
+            if (ArticleView.Image != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "img");
+                string filePath;
+
+                if (ArticleView.Article.Image != null)
                 {
-                    if (ArticleView.Article.Published_Date.HasValue && !published)
-                        ArticleView.Article.Published_Date = null;
+
+                    filePath = Path.Combine(uploadsFolder, ArticleView.Article.Image);
+
+                    if (System.IO.File.Exists(filePath))
+                        System.IO.File.Delete(filePath);
+
                 }
 
-                //For image name creation
-                if (ArticleView.Image != null)
-                {
-                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + ArticleView.Image.FileName;
-                    ArticleView.Article.Image = uniqueFileName;
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ArticleView.Image.FileName;
+                ArticleView.Article.Image = uniqueFileName;
 
-                    string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "img");
-                    string filePath = Path.Combine(uploadsFolder, ArticleView.Article.Image);
-                    var fileStream = new FileStream(filePath, FileMode.Create);
-                        
-                        ArticleView.Image.CopyTo(fileStream);
-                    
-                    
-                }
+                filePath = Path.Combine(uploadsFolder, ArticleView.Article.Image);
+                var fileStream = new FileStream(filePath, FileMode.Create);
+                ArticleView.Image.CopyTo(fileStream);
+            }
 
                 if (ArticleView.Article.Id != 0)
                 {
@@ -162,11 +172,11 @@ namespace MyBlog.Controllers
                 }
                 else
                 {
+                    ArticleView.Article.Created_Date=DateTime.Now;
                    await repository.CreateArticleAsync(ArticleView.Article);
                 }
                 return RedirectToAction("Index");
-            }
-
+          
             return View(ArticleView);
         }
 

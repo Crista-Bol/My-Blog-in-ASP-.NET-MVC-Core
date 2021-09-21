@@ -16,13 +16,24 @@ function load() {
                     drawEachComment(this.id, this.commenter, this.ip, this.detail,this.date, this.heartVoteNumber, this.brokenHeartVoteNumber)
                 );
             });
+            var rowCount = $('#commentList').children('div').length;
+            if (rowCount != 0) {
+                var comSpan = document.createElement("span");
+                comSpan.setAttribute("id", "commentsNum");
+                comSpan.setAttribute("class","comments");
+                comSpan.innerHTML = (rowCount == 1) ? rowCount + " comment" : rowCount + " comments";
+
+                var prevSpan = document.getElementById("readTime");
+                prevSpan.parentNode.insertBefore(comSpan, prevSpan.nextSibling);
+            }else
+                $("#commentsNum").remove();
 
         }
     });
 }
 
 function deleteComment(id) {
-    alert("hi");
+    
     $.ajax({
         type: "Delete",
         url: "/Articles/DeleteComment?id=" + id,

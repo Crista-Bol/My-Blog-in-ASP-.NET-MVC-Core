@@ -15,8 +15,17 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "header", "width": "20%" },
-            { "data": "body", "width": "35%" },
+            {
+                "data": "header",
+                "width": "20%"
+            },
+            {
+                "data": "body",
+                "render": function (data) {
+                    return (data.length > 100 ? data.substring(0, 100) : data);
+                },
+                "width": "35%"
+            },
             {
                 "data": "created_Date",
                 "render": function (data) {

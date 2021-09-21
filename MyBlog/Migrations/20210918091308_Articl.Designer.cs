@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBlog.Models;
 
 namespace MyBlog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210918091308_Articl")]
+    partial class Articl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,7 +263,7 @@ namespace MyBlog.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ArticleId")
+                    b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
                     b.Property<int>("BrokenHeartVoteNumber")
@@ -359,9 +361,7 @@ namespace MyBlog.Migrations
                 {
                     b.HasOne("MyBlog.Models.Article", null)
                         .WithMany("Comments")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ArticleId");
                 });
 
             modelBuilder.Entity("MyBlog.Models.Article", b =>

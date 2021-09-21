@@ -9,13 +9,12 @@
 
         <div id="navigation" class="collapse navbar-collapse flex-column">
             <img class="profile-image mb-3 rounded-circle mx-auto" src="~/img/profile.jpg" alt="image">
-            <div class="bio mb-3">Hi, my name is Crista Gantulga. I am a software developer. Here i will share my knowledge. Hope you will enloy. Thanks<br><a href="about.html">Find out more about me</a></div>
+            <div class="bio mb-3">Hi, my name is Crista Gantulga. I am a software developer. Here i will share my knowledge. Hope you will enloy. Thanks<br><a asp-controller="Home" asp-action="AboutMe">Find out more about me</a></div>
             <ul class="social-list list-inline py-3 mx-auto">
-                <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
-                <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin-in fa-fw"></i></a></li>
-                <li class="list-inline-item"><a href="#"><i class="fab fa-github-alt fa-fw"></i></a></li>
-                <li class="list-inline-item"><a href="#"><i class="fab fa-stack-overflow fa-fw"></i></a></li>
-                <li class="list-inline-item"><a href="#"><i class="fab fa-codepen fa-fw"></i></a></li>
+                <li class="list-inline-item"><a href="https://www.linkedin.com/in/crista-gantulga-a4a8a0111/"><i class="fab fa-linkedin-in fa-fw"></i></a></li>
+                <li class="list-inline-item"><a href="https://github.com/Crista-Bol"><i class="fab fa-github-alt fa-fw"></i></a></li>
+                @*<li class="list-inline-item"><a href="#"><i class="fab fa-stack-overflow fa-fw"></i></a></li>
+                <li class="list-inline-item"><a href="#"><i class="fab fa-codepen fa-fw"></i></a></li>*@
             </ul>
             <ul class="navbar-nav flex-column text-left">
                 <li class="nav-item active">
@@ -37,20 +36,20 @@
         <div class="container">
             @foreach (var article in Model)
             {
-<div class="item mb-5">
-    <div class="media">
-        <img class="mr-3 img-fluid post-thumb d-md-flex" src="~/img/@article.Image" alt="image" />
-        <div class="media-body">
-            <h3 class="title mb-1"><a href="blog-post.html">@article.Header</a></h3>
-            <div class="meta mb-1"><span class="date">Published @(string.Format("{0:dd-MM-yyyy}",article.Published_Date))</span><span class="time">5 min read</span><span class="comment"><a href="#">4 comments</a></span></div>
-            <div class="intro">
-                @if (article.Body.Length > 0)@(article.Body.Length>150 ? article.Body.Substring(0,150):article.Body)
-            </div>
-            <a class="more-link" href="Articles/Detail?Id=@article.Id">Read more &rarr;</a>
+            <div class="item mb-5">
+                <div class="media">
+                    <img class="mr-3 img-fluid post-thumb d-md-flex" src="~/img/@article.Image" alt="image" />
+                    <div class="media-body">
+                        <h3 class="title mb-1"><a href="Articles/Detail?Id=@article.Id">@article.Header</a></h3>
+                        <div class="meta mb-1"><span class="date">Published @(string.Format("{0:dd-MM-yyyy}",article.Published_Date))</span><span class="time">5 min read</span><span class="comment"><a href="#">4 comments</a></span></div>
+                        <div class="intro">
+                            @if (article.Body.Length > 0)@(article.Body.Length>150 ? article.Body.Substring(0,150):article.Body)
+                        </div>
+                        <a class="more-link" href="Articles/Detail?Id=@article.Id">Read more &rarr;</a>
 
-        </div>
-    </div>
-</div>}
+                    </div>
+                </div>
+            </div>}
         </div>
 
     </section>

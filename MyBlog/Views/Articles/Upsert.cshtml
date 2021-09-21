@@ -1,7 +1,7 @@
 ﻿@model MyBlog.Models.ArticleView
 @{
     ViewData["Title"] = "Article";
-    var published = ViewData["isPublished"];
+
 }
 <br />
 <h2 class="text-info">@(Model.Article.Id!=0? "Edit":"Create") Article</h2>
@@ -13,6 +13,7 @@
             {
                 <input type="hidden" asp-for="Article.Id" />
                 <input type="hidden" asp-for="Article.Published_Date" />
+                <input type="hidden" asp-for="Article.Image" />
             }
             <div class="form-group row">
                 <div class="col-3">
@@ -28,7 +29,7 @@
                     <label asp-for="Article.Body"></label>
                 </div>
                 <div class="col-6">
-                    <input asp-for="Article.Body" class="form-control" />
+                    <textarea cols="40" rows="15" asp-for="Article.Body" class="form-control"></textarea>
                     <span asp-validation-for="Article.Body" class="text-danger"></span>
                 </div>
             </div>
@@ -42,7 +43,7 @@
                         <label class="custom-file-label" for="customFile">Choose file</label>
                         <span asp-validation-for="Image" class="text-danger"></span>
                     </div>
-                    <label class="small text-muted">@Html.DisplayFor(m=>m.Article.Image)</label>
+                    <label class="small text-muted">@Model.Article.Image</label>
                 </div>
             </div>
             <div class="form-group row">
@@ -50,8 +51,7 @@
                     <label>Publish</label>
                 </div>
                 <div class="col-6">
-
-                    <input type="checkbox" asp-for="@published" class="form-control" />
+                    <input type="checkbox" asp-for="Published" class="form-control" />
                     <!--<span name="isPublished" class="text-danger"></span>-->
                 </div>
             </div>
@@ -74,7 +74,7 @@
 
         // Add the following code if you want the name of the file appear on select
         $(".custom-file-input").on("change", function () {
-            
+
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });

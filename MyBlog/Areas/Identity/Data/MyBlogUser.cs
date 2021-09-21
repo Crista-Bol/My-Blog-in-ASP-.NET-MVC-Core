@@ -17,5 +17,13 @@ namespace MyBlog.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName ="nvarchar(100)")]
         public string LastName { get; set; }
+
+        [PersonalData]
+        [Column(TypeName = "nvarchar(100)")]
+        public string UserName { get; set; }
+
+        [PersonalData]
+        [Column(TypeName = "nvarchar(100)")]
+        public string Email { get; set; }
     }
 }

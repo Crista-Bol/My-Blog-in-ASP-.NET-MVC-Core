@@ -11,9 +11,9 @@ namespace MyBlog.Models
     {
         public Article Article { get; set; }
 
-        [Display(Name ="Image")]
-        public IFormFile Image { get; set; }
+        public Boolean Published { get; set; }
 
-        public IEnumerable<Comment> Comments { get; set; }
+        [Display(Name = "Image")]
+        public IFormFile Image { get; set; }
     }
 }

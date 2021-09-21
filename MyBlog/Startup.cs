@@ -32,13 +32,18 @@ namespace MyBlog
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")
                 ));
-
-          
+                    
 
             services.AddScoped<IDbRepository, SQLDbRepository>();
             
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            });
+
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
