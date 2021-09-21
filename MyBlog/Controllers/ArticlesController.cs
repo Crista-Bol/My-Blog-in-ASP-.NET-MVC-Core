@@ -55,14 +55,24 @@ namespace MyBlog.Controllers
             
             ArticleView = new ArticleView();
             ArticleView.Article = await repository.GetArticleAsync((int)Id);
+            DateTime publishedDate = (DateTime)ArticleView.Article.Published_Date;
 
-            DateTime now=DateTime.Now;
-            DateTime aMonthAgo=now.AddMonths(-1);
-            if (ArticleView.Article.Published_Date > aMonthAgo) {
-                ViewData["publishedDate"] = "on "+ArticleView.Article.Published_Date;
-            } else {
-                ViewData["publishedDate"] = (now.Month - ArticleView.Article.Published_Date.Value.Month)+" ago";
+            if (publishedDate != null)
+            {
+                DateTime now = DateTime.Now;
+                DateTime aMonthAgo = now.AddMonths(-1);
+
+                if (publishedDate > aMonthAgo)
+                {
+                    long dayDiff = (now - (DateTime)ArticleView.Article.Published_Date).Days;
+                    ViewData["publishedDate"] = ((dayDiff==0)?"today":(dayDiff == 1? "a day ago":dayDiff+" days ago"));
+                }
+                else
+                {
+                    ViewData["publishedDate"] = publishedDate.Day+"/"+ publishedDate.Month+"/"+publishedDate.Year;
+                }
             }
+            
         
             return View(ArticleView);
         }

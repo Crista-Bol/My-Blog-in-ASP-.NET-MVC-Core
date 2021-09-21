@@ -16,18 +16,28 @@ function load() {
                     drawEachComment(this.id, this.commenter, this.ip, this.detail,this.date, this.heartVoteNumber, this.brokenHeartVoteNumber)
                 );
             });
+
+            //For comment count
             var rowCount = $('#commentList').children('div').length;
             if (rowCount != 0) {
                 var comSpan = document.createElement("span");
                 comSpan.setAttribute("id", "commentsNum");
-                comSpan.setAttribute("class","comments");
+                comSpan.setAttribute("class", "comments");
                 comSpan.innerHTML = (rowCount == 1) ? rowCount + " comment" : rowCount + " comments";
 
-                var prevSpan = document.getElementById("readTime");
+                var prevSpan = document.getElementById("readingTime");
                 prevSpan.parentNode.insertBefore(comSpan, prevSpan.nextSibling);
-            }else
+            } else {
                 $("#commentsNum").remove();
+            }
 
+            //For Reading time
+            const text = document.getElementById("article").innerText;
+            const wpm = 225;
+            const words = text.trim().split(/\s+/).length;
+            const time = Math.ceil(words / wpm);
+            document.getElementById("readingTime").innerText = time +" min read";
+            
         }
     });
 }
