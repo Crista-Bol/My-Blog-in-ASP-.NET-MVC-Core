@@ -10,6 +10,7 @@ namespace MyBlog.Areas.Identity.Data
     // Add profile data for application users by adding properties to the MyBlogUser class
     public class MyBlogUser : IdentityUser
     {
+        
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string FirstName { get; set; }
@@ -18,12 +19,5 @@ namespace MyBlog.Areas.Identity.Data
         [Column(TypeName ="nvarchar(100)")]
         public string LastName { get; set; }
 
-        [PersonalData]
-        [Column(TypeName = "nvarchar(100)")]
-        public string UserName { get; set; }
-
-        [PersonalData]
-        [Column(TypeName = "nvarchar(100)")]
-        public string Email { get; set; }
     }
 }

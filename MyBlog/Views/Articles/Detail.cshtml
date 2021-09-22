@@ -10,14 +10,16 @@
     <div class="row">
         <div class="col-lg-12">
             <input type="hidden" id="articleId" value="@Model.Article.Id" />
+            
+            <input type="hidden" id="IsAdmin" value="@(User.IsInRole("Admin")?1:0)" />
             <article id="article" class="blog-post px-3 py-5 p-md-5">
-                
+
                 <header class="mb-4">
                     <h2 class="font-weight-normal mb-1">@Model.Article.Header</h2>
                     <div class="meta mb-3">
                         <span class="date">Posted on @publishedDate</span>
                         <span id="readingTime" class="time"></span>
-                        
+
                     </div>
                     <a class="badge bg-secondary text-decoration-none btn-link text-white" href="#!">Web Design</a>
                     <a class="badge bg-secondary text-decoration-none text-white" href="#!">Freebies</a>
@@ -30,9 +32,9 @@
                     </figure>
                     <section class="mb-5"><p class="fs-5">@Model.Article.Body</p></section>
                 </div>
-                
+
             </article>
-    
+
             <section class="px-5">
                 <div class="card bg-light">
                     <div class="card-body">
@@ -47,7 +49,7 @@
                             </div>
                         </form>
                         <div id="commentList" class="mt-5 bg-light">
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </section>

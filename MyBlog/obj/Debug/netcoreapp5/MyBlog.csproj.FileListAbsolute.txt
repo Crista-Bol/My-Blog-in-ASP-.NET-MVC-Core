@@ -455,3 +455,5 @@ C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\Microsoft.Web.In
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Home\AboutMe.cshtml.g.cs
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Articles\Detail.cshtml.g.cs
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Articles\Upsert.cshtml.g.cs
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Admin\UserList.cshtml.g.cs
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Admin\EditUserRole.cshtml.g.cs

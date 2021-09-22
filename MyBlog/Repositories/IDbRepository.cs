@@ -1,4 +1,5 @@
-﻿using MyBlog.Models;
+﻿using MyBlog.Areas.Identity.Data;
+using MyBlog.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,5 +22,7 @@ namespace MyBlog.Repositories
 
         Task DeleteArticleAsync(Article article);
         Task DeleteCommentAsync(Comment comment);
+
+        Task<IEnumerable<MyBlogUser>> GetUsersAsync();
     }
 }

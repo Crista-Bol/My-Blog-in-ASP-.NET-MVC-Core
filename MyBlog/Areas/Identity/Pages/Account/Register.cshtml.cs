@@ -95,14 +95,17 @@ namespace MyBlog.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
+
+            //if role hasn't then chosen set user role
             var role = _roleManager.FindByIdAsync(Input.roleId).Result;
+
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new MyBlogUser { UserName = Input.Email, Email = Input.Email };
+                var user = new MyBlogUser { UserName = Input.Email, Email = Input.Email, FirstName=Input.FirstName, LastName=Input.LastName };
 
                 //Checking same username and email
-                var existingUser=_userManager.FindByEmailAsync(Input.Email);
+                var existingUser=await _userManager.FindByEmailAsync(Input.Email);
                 
                 if (existingUser != null)
                 {
@@ -145,6 +148,7 @@ namespace MyBlog.Areas.Identity.Pages.Account
                     }
                 }
             }
+
             ViewData["roles"] = _roleManager.Roles.ToList();
             // If we got this far, something failed, redisplay form
             return Page();

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using MyBlog.Areas.Identity.Data;
 using MyBlog.Models;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,11 @@ namespace MyBlog.Repositories
         public async Task<IEnumerable<Comment>> GetCommentsAsync(int articleId)
         {
             return await _db.Comments.Where(cm=>cm.ArticleId== articleId).OrderBy(cm=>cm.Date).ToListAsync();
+        }
+
+        public async Task<IEnumerable<MyBlogUser>> GetUsersAsync()
+        {
+            return await _db.users.OrderBy(u => u.FirstName).ToListAsync();
         }
 
         public async Task<Article> GetArticleAsync(int id) {

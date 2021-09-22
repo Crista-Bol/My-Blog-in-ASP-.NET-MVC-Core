@@ -1,0 +1,77 @@
+﻿<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Users</h2>
+    </div>
+    <div class="col-6 text-right">
+
+    </div>
+</div>
+<br />
+<div class="border bg-white">
+    <br />
+    <div>
+        <table id="users" class="table table-striped border">
+            <thead>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th></th>
+            </thead>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        var dataTable;
+
+        $(document).ready(
+            function () {
+                loadDataTable();
+            });
+
+
+        function loadDataTable() {
+
+            dataTable = $('#users').DataTable({
+                "ajax": {
+                    "url": "/admin/getUserList/",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    {
+                        "data": "firstName",
+                        "width": "20%"
+                    },
+                    {
+                        "data": "lastName",
+                        "width": "25%"
+                    },
+                    {
+                        "data": "email",
+                        "width": "25%"
+                    },
+                    {
+                        "data": "userName",
+                        "width": "25%"
+                    },
+                    {
+                        "data": "id",
+                        "render": function (data) {
+                            return `<a href="/admin/EditUserRole?userId=${data}" title="Edit Role"><i class="fas fa-user-lock"></i></a>`
+                        },
+                        "width": "5%"
+                    }
+                ],
+                "language": {
+                    "emptyTable": "no data found"
+                },
+                "width": "100%"
+            });
+
+        }
+
+    </script>
+}
