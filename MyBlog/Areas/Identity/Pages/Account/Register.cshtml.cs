@@ -25,21 +25,19 @@ namespace MyBlog.Areas.Identity.Pages.Account
         private readonly UserManager<MyBlogUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        
         
 
         public RegisterModel(
             UserManager<MyBlogUser> userManager,
             SignInManager<MyBlogUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _roleManager = roleManager;
             
         }
 
@@ -81,13 +79,12 @@ namespace MyBlog.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Display(Name = "Role")]
-            public string roleId { get; set; }
+            
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            ViewData["roles"] = _roleManager.Roles.ToList();
+            
             ReturnUrl = Url.Content("~/");//returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -96,8 +93,6 @@ namespace MyBlog.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
 
-            //if role hasn't then chosen set user role
-            var role = _roleManager.FindByIdAsync(Input.roleId).Result;
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
@@ -118,7 +113,7 @@ namespace MyBlog.Areas.Identity.Pages.Account
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User created a new account with password.");
-                        await _userManager.AddToRoleAsync(user, role.Name);
+                        
 
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -149,7 +144,7 @@ namespace MyBlog.Areas.Identity.Pages.Account
                 }
             }
 
-            ViewData["roles"] = _roleManager.Roles.ToList();
+            
             // If we got this far, something failed, redisplay form
             return Page();
         }

@@ -69,11 +69,22 @@
                             <p>
                                 @foreach (var provider in Model.ExternalLogins)
                                 {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    var className = "btn btn-primary";
+
+                                    if (provider.Name == "Facebook")
+                                        className = "fa fa-facebook";
+                                    if (provider.Name == "Google")
+                                        className = "fa fa-google";
+
+                                    <button type="submit" class="@className" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"> @provider.DisplayName</button>
                                 }
                             </p>
                         </div>
                     </form>
+                    <div class="w-auto d-flex justify-content-center">
+                        <figure><img src="/img/signin-image.jpg" alt="sing in image"></figure>
+                        @* <a href="#" class="signup-image-link">I am already member</a>*@
+                    </div>
                 }
             }
         </section>
