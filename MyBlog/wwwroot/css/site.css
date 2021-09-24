@@ -59,8 +59,9 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: Poppins;
 }
 .footer {
   margin-bottom:auto;
@@ -107,7 +108,17 @@ body {
         background: #dd4b39;
         color: white;
     }
-input {
+.reg-form-group {
+    position: relative;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+    .reg-form-group:last-child {
+        margin-bottom: 0px;
+    }
+
+.borderless-input {
     width: 100%;
     display: block;
     border: none;
@@ -117,38 +128,56 @@ input {
     box-sizing: border-box;
 }
 
-    input::-webkit-input-placeholder {
+    .borderless-input::-webkit-input-placeholder {
         color: #999;
     }
 
-    input::-moz-placeholder {
+    .borderless-input::-moz-placeholder {
         color: #999;
     }
 
-    input:-ms-input-placeholder {
+    .borderless-input:-ms-input-placeholder {
+    color: #999;
+    }
+    
+    .borderless-input:-moz-placeholder {
         color: #999;
     }
 
-    input:-moz-placeholder {
-        color: #999;
+    .borderless-input:focus {
+        color: #222;
+        outline: none;
+  
     }
 
-    input:focus {
-        border-bottom: 1px solid #222;
-    }
-
-        input:focus::-webkit-input-placeholder {
+        .borderless-input:focus::-webkit-input-placeholder {
             color: #222;
+            outline: none;
         }
 
-        input:focus::-moz-placeholder {
+        .borderless-input:focus::-moz-placeholder {
             color: #222;
+            outline: none;
         }
 
-        input:focus:-ms-input-placeholder {
+        .borderless-input:focus:-ms-input-placeholder {
             color: #222;
+            outline: none;
         }
 
-        input:focus:-moz-placeholder {
+        .borderless-input:focus:-moz-placeholder {
             color: #222;
+            outline: none;
         }
+
+.reg-form-group label {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    color: #222;
+}

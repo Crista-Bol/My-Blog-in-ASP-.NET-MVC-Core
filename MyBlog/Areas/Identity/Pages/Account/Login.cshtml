@@ -10,17 +10,17 @@
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
+                <h5 class="pt-2">Use a local account to log in.</h5>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
+                <div class="reg-form-group">
+                    <label><i class="far fa-envelope"></i></label>
+                    <input asp-for="Input.Email" class="borderless-input" placeholder="Email" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
+                <div class="reg-form-group">
+                    <label><i class="fas fa-key"></i></label>
+                    <input asp-for="Input.Password" class="borderless-input" placeholder="Password" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -50,7 +50,7 @@
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h4>Use another service to log in.</h4>
+            <h5 class="pt-2">Use another service to log in.</h5>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
