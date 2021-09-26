@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<MyBlog.Models.Article>
+@{ 
+    var totalPages = ViewBag.totalPages;
+}
 
 <div class="profile-side">
     <h1 class="blog-name pt-lg-4 mb-0">Crista's Blog</h1>
@@ -14,7 +17,7 @@
                 <li class="list-inline-item"><a href="https://www.linkedin.com/in/crista-gantulga-a4a8a0111/"><i class="fab fa-linkedin-in fa-fw"></i></a></li>
                 <li class="list-inline-item"><a href="https://github.com/Crista-Bol"><i class="fab fa-github-alt fa-fw"></i></a></li>
                 @*<li class="list-inline-item"><a href="#"><i class="fab fa-stack-overflow fa-fw"></i></a></li>
-                <li class="list-inline-item"><a href="#"><i class="fab fa-codepen fa-fw"></i></a></li>*@
+                    <li class="list-inline-item"><a href="#"><i class="fab fa-codepen fa-fw"></i></a></li>*@
             </ul>
             <ul class="navbar-nav flex-column text-left">
                 <li class="nav-item active">
@@ -34,30 +37,72 @@
 <div class="main-wrapper">
     <section class="blog-list px-3 py-5 p-md-5">
         <div class="container">
-            @foreach (var article in Model)
-            {
-            <div class="item mb-5">
-                <div class="media">
-                    <img class="mr-3 img-fluid post-thumb d-md-flex" src="~/img/@article.Image" alt="image" />
-                    <div class="media-body">
-                        <h3 class="title mb-1"><a href="Articles/Detail?Id=@article.Id">@article.Header</a></h3>
-                        <div class="meta mb-1"><span class="date">Published @(string.Format("{0:dd-MM-yyyy}",article.Published_Date))</span><span class="time">5 min read</span><span class="comment"><a href="#">4 comments</a></span></div>
-                        <div class="intro">
-                            @if (article.Body.Length > 0)@(article.Body.Length>150 ? article.Body.Substring(0,150):article.Body)
-                        </div>
-                        <a class="more-link" href="Articles/Detail?Id=@article.Id">Read more &rarr;</a>
-
-                    </div>
-                </div>
-            </div>}
+            <div id="artDiv">
+            </div>
+            <div class="d-flex justify-content-end"><a id="moreArticles" class="btn btn-primary text-white">More Articles >></a></div>
         </div>
 
     </section>
 </div>
 @section Scripts{
+    <script>
+        var pageCount;
+        $(document).ready(
+            function () {
+                pageCount = 1;
 
-    
-        
+                if (pageCount >= @totalPages)
+                    $("#moreArticles").addClass("disabled");
+
+                $("#artDiv").empty();
+                load(pageCount);
+            });
+
+        function load(pageCount) {
+            $.ajax({
+                type: "GET",
+                url: "/Articles/moreArticles?pageCount=" + pageCount,
+                dataType: "json",
+                success: function (data) {
+
+                    $.each(data.data, function () {
+                        body = (this.body.length) > 150 ? this.body.substring(0, 150) : this.body;
+                        pubDate = new Date(this.published_Date);
+
+                        $("#artDiv").append(
+                            drawArticle(this.image, this.id, this.header, pubDate.toLocaleDateString("en-US"), body));
+                    });
+                }
+            });
+        }
+
+        $("#moreArticles").on("click", function () {
+            pageCount++;
+            if (pageCount >=@totalPages)
+                $("#moreArticles").addClass("disabled");
+
+            load(pageCount);
+        });
+
+        function drawArticle(img, id, header, publishedDate, body) {
+
+            return `<div class="item mb-5">
+                            <div class="media">
+                                <img class="mr-3 img-fluid post-thumb d-md-flex" src="/img/${img}" alt="image" />
+                                <div class="media-body">
+                                    <h3 class="title mb-1"><a href="Articles/Detail?Id=${id}">${header}</a></h3>
+                                    <div class="meta mb-1"><span class="date">Published ${publishedDate}</span><span class="time">5 min read</span><span class="comment"><a href="#">4 comments</a></span></div>
+                                    <div class="intro">
+                                        ${body}
+                                    </div>
+                                    <a class="more-link" href="Articles/Detail?Id=${id}">Read more &rarr;</a>
+
+                                </div>
+                            </div>
+                        </div>`;
+        }
+
+    </script>
 }
 
 

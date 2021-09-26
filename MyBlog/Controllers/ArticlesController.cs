@@ -31,24 +31,30 @@ namespace MyBlog.Controllers
         [BindProperty]
         public Comment newComment { get; set; }
 
+        public int pageSize { get; }
+
+        //private int pageCount { get; set; }
         public ArticlesController(IDbRepository repository, IWebHostEnvironment hostEnvironment)
         {
+            pageSize = 1;
             this.repository = repository;
             this.webHostEnvironment = hostEnvironment;
+            
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            
             return View();
         }
         
         [HttpGet]
         public async Task<IActionResult> PublishedArticles()
         {
-            var articles=await repository.GetArticlesAsync(published: true);
-            
-            return View(articles);
+            var totalArticles = await repository.GetArticlesCountAsync(true);
+            ViewBag.totalPages = totalArticles / pageSize;
+            return View();
         }
 
         public async Task<IActionResult> Detail(int Id) {
@@ -193,7 +199,13 @@ namespace MyBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> getAll()
         {
-            return Json(new { data = await repository.GetArticlesAsync(null)});
+            return Json(new { data = await repository.GetArticlesAsync(null,0,0)});
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> moreArticles(int pageCount) {
+            
+            return Json(new { data= await repository.GetArticlesAsync(true, pageCount,pageSize) });
         }
 
         [HttpDelete]

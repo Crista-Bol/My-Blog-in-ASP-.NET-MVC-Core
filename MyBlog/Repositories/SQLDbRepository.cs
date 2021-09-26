@@ -18,12 +18,27 @@ namespace MyBlog.Repositories
             _db = db;
         }
 
-        public async Task<IEnumerable<Article>> GetArticlesAsync(bool? published)
+        public async Task<int> GetArticlesCountAsync(bool? published)
         {
-
             return (published != null && published == true) ?
-                await _db.Articles.Where(a => a.Published_Date != null).OrderByDescending(a => a.Created_Date).ToListAsync() :
-                await _db.Articles.OrderByDescending(a => a.Created_Date).ToListAsync();
+                    await _db.Articles.Where(a => a.Published_Date != null).CountAsync() :
+                    await _db.Articles.CountAsync();
+        }
+
+        public async Task<IEnumerable<Article>> GetArticlesAsync(bool? published, int pageIndex, int pageSize)
+        {
+            return (pageSize!=0)?((published != null && published == true) ?
+                    await _db.Articles.Where(a => a.Published_Date != null)
+                                      .OrderByDescending(a => a.Created_Date)
+                                      .Skip((pageIndex-1)*pageSize)
+                                      .Take(pageSize)
+                                      .ToListAsync():
+                    await _db.Articles.OrderByDescending(a => a.Created_Date)
+                                  .Skip((pageIndex - 1) * pageSize)
+                                  .Take(pageSize)
+                                  .ToListAsync())
+             : (await _db.Articles.OrderByDescending(a => a.Created_Date)
+                                 .ToListAsync());
         }
         public async Task<IEnumerable<Comment>> GetCommentsAsync(int articleId)
         {

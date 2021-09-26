@@ -7,7 +7,9 @@ namespace MyBlog.Repositories
 {
     public interface IDbRepository
     {
-        Task<IEnumerable<Article>> GetArticlesAsync(bool? published);
+        Task<int> GetArticlesCountAsync(bool? published);
+
+        Task<IEnumerable<Article>> GetArticlesAsync(bool? published, int pageIndex, int pageSize);
         Task<IEnumerable<Comment>> GetCommentsAsync(int articleId);
 
         Task<Article> GetArticleAsync(int id);
