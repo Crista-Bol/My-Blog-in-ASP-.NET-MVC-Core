@@ -97,5 +97,35 @@ namespace MyBlog.Repositories
             _db.Comments.Remove(comment);
             await _db.SaveChangesAsync();
         }
+
+        /*Start-Article Categories*/
+        public async Task<IEnumerable<ArticleCategory>> getArtCategoriesAsync() {
+            return await _db.ArticleCategories.OrderBy(c => c.Name).ToListAsync();
+        }
+
+        public async Task<ArticleCategory> getArtCategoryAsync(int id)
+        {
+            return await _db.ArticleCategories.FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+       
+        public async Task CreateArtCatAsync(ArticleCategory cat)
+        {
+            await _db.ArticleCategories.AddAsync(cat);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task UpdateArtCatAsync(ArticleCategory cat)
+        {
+             _db.ArticleCategories.Update(cat);
+            await _db.SaveChangesAsync();
+        }
+        public async Task DeleteArtCatAsync(ArticleCategory cat)
+        {
+            _db.ArticleCategories.Remove(cat);
+            await _db.SaveChangesAsync();
+        }
+        /*End-Article Categories*/
+
     }
 }

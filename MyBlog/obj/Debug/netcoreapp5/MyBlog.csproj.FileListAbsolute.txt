@@ -457,3 +457,5 @@ C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Arti
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Articles\Upsert.cshtml.g.cs
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Admin\UserList.cshtml.g.cs
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Admin\EditUserRole.cshtml.g.cs
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Articles\UpsertArtCat.cshtml.g.cs
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Articles\ArtCategories.cshtml.g.cs

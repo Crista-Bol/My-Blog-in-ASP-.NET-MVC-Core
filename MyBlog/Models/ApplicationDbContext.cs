@@ -25,5 +25,7 @@ namespace MyBlog.Models
         public DbSet<MyBlogUser> users { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<ArticleCategory> ArticleCategories { get; set; }
+
     } 
 }

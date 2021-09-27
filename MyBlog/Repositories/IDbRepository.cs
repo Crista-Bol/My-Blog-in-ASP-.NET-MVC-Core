@@ -26,5 +26,14 @@ namespace MyBlog.Repositories
         Task DeleteCommentAsync(Comment comment);
 
         Task<IEnumerable<MyBlogUser>> GetUsersAsync();
+
+        /*Start-Art categories*/
+        Task<IEnumerable<ArticleCategory>> getArtCategoriesAsync();
+        Task<ArticleCategory> getArtCategoryAsync(int id);
+
+        Task CreateArtCatAsync(ArticleCategory cat);
+        Task UpdateArtCatAsync(ArticleCategory cat);
+        Task DeleteArtCatAsync(ArticleCategory cat);
+        /*End-Art Categories*/
     }
 }

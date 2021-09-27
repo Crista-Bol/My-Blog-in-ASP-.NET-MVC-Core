@@ -33,13 +33,15 @@ namespace MyBlog.Controllers
 
         public int pageSize { get; }
 
+        [BindProperty]
+        public ArticleCategory artCategory { get; set; }
+
         //private int pageCount { get; set; }
         public ArticlesController(IDbRepository repository, IWebHostEnvironment hostEnvironment)
         {
-            pageSize = 1;
+            pageSize = 10;
             this.repository = repository;
             this.webHostEnvironment = hostEnvironment;
-            
         }
 
         [HttpGet]
@@ -237,6 +239,52 @@ namespace MyBlog.Controllers
 
             return Json(new { success=true, message="Successfull!!"});
 
+        }
+
+
+        public async Task<IActionResult> ArtCategories() {
+            var artCategories = await repository.getArtCategoriesAsync();
+            return View(artCategories);
+        }
+
+        public async Task<IActionResult> UpsertArtCat(int id) {
+
+            if (id != 0)
+            {
+                artCategory = await repository.getArtCategoryAsync(id);
+
+                if (artCategory == null)
+                    NotFound();
+            }
+            else
+            {
+                artCategory = new ArticleCategory();
+            }               
+
+            return View(artCategory);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertArtCat() {
+
+            if (artCategory.Id == 0)
+               await repository.CreateArtCatAsync(artCategory);
+            else
+                await repository.UpdateArtCatAsync(artCategory);
+
+            return RedirectToAction("ArtCategories");
+        } 
+        [HttpPost]
+        public async Task<IActionResult> DeleteArtCat(int Id) {
+
+            ArticleCategory cat=await repository.getArtCategoryAsync(Id);
+
+            if (cat == null)
+                return NotFound();
+
+            await repository.DeleteArtCatAsync(cat);
+
+            return RedirectToAction("ArtCategories");
         }
     }
 }
