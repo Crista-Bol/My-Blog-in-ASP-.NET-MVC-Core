@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,5 +29,7 @@ namespace MyBlog.Models
         public string Image { get; set; }
         
         public ICollection<Comment> Comments { get; set; }
+
+        public virtual ArticleCategory ArticleCategory { get; set; }
     }
 }

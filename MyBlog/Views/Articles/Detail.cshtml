@@ -4,7 +4,8 @@
     ViewData["Title"] = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var publishedDate = ViewData["publishedDate"];
-
+    var val = (User.Identity.IsAuthenticated)?User.Identity.Name:"";
+    var disable = (User.Identity.IsAuthenticated)?"disabled":"";
 }
 <div class="container mt-2">
     <div class="row">
@@ -44,7 +45,9 @@
                                 <textarea class="form-control mb-1 mr-4" id="dt" name="Detail" placeholder="Please write your comment here."></textarea>
                             </div>
                             <div class="row">
-                                <input type="text" class="form-control mb-1 col-8 mr-2" id="cmr" name="Commenter" placeholder="Please write your name." />
+                                
+                                <input type="text" class="form-control mb-1 col-8 mr-2" @disable id="cmr" name="Commenter" value="@val" placeholder="Please write your name." />
+                                                                
                                 <a id="sendButton" class="btn btn-primary text-white form-control col-2" onclick=addComment(@Model.Article.Id)>Send</a>
                             </div>
                         </form>

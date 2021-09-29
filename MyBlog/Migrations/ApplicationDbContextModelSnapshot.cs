@@ -232,6 +232,9 @@ namespace MyBlog.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ArticleCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Body")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -250,6 +253,8 @@ namespace MyBlog.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ArticleCategoryId");
 
                     b.ToTable("Articles");
                 });
@@ -373,6 +378,15 @@ namespace MyBlog.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MyBlog.Models.Article", b =>
+                {
+                    b.HasOne("MyBlog.Models.ArticleCategory", "ArticleCategory")
+                        .WithMany("Articles")
+                        .HasForeignKey("ArticleCategoryId");
+
+                    b.Navigation("ArticleCategory");
+                });
+
             modelBuilder.Entity("MyBlog.Models.Comment", b =>
                 {
                     b.HasOne("MyBlog.Models.Article", null)
@@ -385,6 +399,11 @@ namespace MyBlog.Migrations
             modelBuilder.Entity("MyBlog.Models.Article", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("MyBlog.Models.ArticleCategory", b =>
+                {
+                    b.Navigation("Articles");
                 });
 #pragma warning restore 612, 618
         }

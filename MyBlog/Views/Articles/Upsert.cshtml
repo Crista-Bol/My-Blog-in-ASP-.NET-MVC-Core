@@ -1,7 +1,7 @@
 ﻿@model MyBlog.Models.ArticleView
 @{
     ViewData["Title"] = "Article";
-
+    
 }
 <br />
 <h2 class="text-info">@(Model.Article.Id!=0? "Edit":"Create") Article</h2>
@@ -15,6 +15,16 @@
                 <input type="hidden" asp-for="Article.Published_Date" />
                 <input type="hidden" asp-for="Article.Image" />
             }
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="CatId"></label>
+                </div>
+                <div class="col-6">
+                    <select asp-for="CatId" asp-items="ViewBag.ArtCats" class="form-control" >
+                        <option value="0">Please select</option>
+                    </select>
+                </div>
+            </div>
             <div class="form-group row">
                 <div class="col-3">
                     <label asp-for="Article.Header"></label>

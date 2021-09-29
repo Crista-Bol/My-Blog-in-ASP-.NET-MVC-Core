@@ -15,6 +15,7 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
+            
             {
                 "data": "header",
                 "width": "20%"

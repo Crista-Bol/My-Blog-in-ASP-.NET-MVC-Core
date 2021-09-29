@@ -15,5 +15,8 @@ namespace MyBlog.Models
 
         [Display(Name = "Image")]
         public IFormFile Image { get; set; }
+
+        [Display(Name = "Category")]
+        public int CatId { get; set; }
     }
 }

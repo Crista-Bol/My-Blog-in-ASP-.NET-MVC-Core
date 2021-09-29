@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MyBlog.Models;
 using MyBlog.Repositories;
 using System;
@@ -80,16 +81,16 @@ namespace MyBlog.Controllers
                     ViewData["publishedDate"] = publishedDate.Day+"/"+ publishedDate.Month+"/"+publishedDate.Year;
                 }
             }
-            
-        
+          
             return View(ArticleView);
         }
 
-        public IActionResult Upsert(int? Id) {
-
+        public async Task<IActionResult> Upsert(int? Id) {
+            IEnumerable<ArticleCategory> artCats= await repository.getArtCategoriesAsync();
+            ViewBag.ArtCats=new SelectList(artCats, "Id", "Name");
+            
             ArticleView = new ArticleView();
-
-
+            
             if (Id != null)
             {
                 ArticleView.Article = (repository.GetArticleAsync((int)Id)).Result;
@@ -98,6 +99,7 @@ namespace MyBlog.Controllers
                     NotFound();
 
                 ArticleView.Published = (ArticleView.Article.Published_Date != null ? true : false);
+                ArticleView.CatId = (ArticleView.Article.ArticleCategory != null)? ArticleView.Article.ArticleCategory.Id:0;
             }
             else {
                 ArticleView.Article = new Article();
@@ -152,6 +154,12 @@ namespace MyBlog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert()
         {
+            if (ArticleView.CatId != 0){
+                    ArticleCategory cat = await repository.getArtCategoryAsync(ArticleView.CatId);
+                    ArticleView.Article.ArticleCategory = cat;
+             }
+            
+
             if (!ArticleView.Article.Published_Date.HasValue && ArticleView.Published)
                 ArticleView.Article.Published_Date = DateTimeOffset.UtcNow.DateTime;
             else
@@ -201,6 +209,7 @@ namespace MyBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> getAll()
         {
+       
             return Json(new { data = await repository.GetArticlesAsync(null,0,0)});
         }
 
