@@ -52,7 +52,15 @@ namespace MyBlog.Repositories
 
         public async Task<Article> GetArticleAsync(int id) {
 
-            return await _db.Articles.FirstOrDefaultAsync(article=>article.Id==id);
+            return await _db.Articles.Include(a=>a.ArticleCategory).FirstOrDefaultAsync(article=>article.Id==id);
+        }
+
+        public async Task<IEnumerable<Article>> GetArtsWithinTimeByCatId(int Id, int catId, DateTime dt) {
+            DateTime now = DateTime.Now;
+            return _db.Articles
+                .Include(a => a.ArticleCategory)
+                .Where(a => a.Id!=Id && a.ArticleCategory.Id == catId && a.Published_Date <= now && a.Published_Date >= dt)
+                .ToList();
         }
 
 

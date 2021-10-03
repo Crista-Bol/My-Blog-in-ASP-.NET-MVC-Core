@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,7 +15,7 @@ using System.Web.Helpers;
 
 namespace MyBlog.Controllers
 {
-    
+    [Authorize]
     public class ArticlesController : Controller
     {
 
@@ -45,14 +46,12 @@ namespace MyBlog.Controllers
             this.webHostEnvironment = hostEnvironment;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            
             return View();
         }
-        
-        [HttpGet]
+
+        [AllowAnonymous]
         public async Task<IActionResult> PublishedArticles()
         {
             var totalArticles = await repository.GetArticlesCountAsync(true);
@@ -60,6 +59,7 @@ namespace MyBlog.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Detail(int Id) {
             
             ArticleView = new ArticleView();
@@ -81,7 +81,11 @@ namespace MyBlog.Controllers
                     ViewData["publishedDate"] = publishedDate.Day+"/"+ publishedDate.Month+"/"+publishedDate.Year;
                 }
             }
-          
+
+            if (ArticleView.Article.ArticleCategory != null) {
+                DateTime dt = DateTime.Today.AddDays(-60);
+                ViewData["lastSameArts"]=await repository.GetArtsWithinTimeByCatId(ArticleView.Article.Id,ArticleView.Article.ArticleCategory.Id, dt);
+            }
             return View(ArticleView);
         }
 
@@ -107,13 +111,13 @@ namespace MyBlog.Controllers
 
             return View(ArticleView);
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> commentList(int articleId)
         {
             return  Json(new { data = await repository.GetCommentsAsync(articleId) });
         }
-
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> SendComment(string commenter,string detail,int articleId) {
 
@@ -130,7 +134,7 @@ namespace MyBlog.Controllers
             
             return Json(new { success=true});
         }
-
+        [AllowAnonymous]
         [HttpPut]
         public async Task<IActionResult> GiveHeart(int Id) {
 
@@ -139,7 +143,7 @@ namespace MyBlog.Controllers
             await repository.UpdateCommentAsync(comment);
             return Json(new { success=true });
         }
-
+        [AllowAnonymous]
         [HttpPut]
         public async Task<IActionResult> GiveBrokenHeart(int Id)
         {
@@ -209,16 +213,17 @@ namespace MyBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> getAll()
         {
-       
             return Json(new { data = await repository.GetArticlesAsync(null,0,0)});
         }
 
+
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> moreArticles(int pageCount) {
             
             return Json(new { data= await repository.GetArticlesAsync(true, pageCount,pageSize) });
         }
-
+        
         [HttpDelete]
         public async Task<IActionResult> DeleteComment(int id) {
 

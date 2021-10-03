@@ -15,8 +15,7 @@ function loadWeather() {
                 var response = JSON.parse(xhr.responseText);
                 var temperature = parseInt(response.main.temp);
                 var wtDescription = response.weather[0].description;
-                /*var dt = new Date(response.dt * 1000).toLocaleDateString("en-GB");*/
-                
+                                
                 document.getElementById('weather').innerHTML = `<div class="wt"><i class="fas fa-cloud-sun"></i><span class="wtSummary">` + wtDescription + `</span> ` + Math.round(temperature) + `°C </div>`;
             } else {
                 console.error(xhr.statusText);
@@ -26,4 +25,4 @@ function loadWeather() {
     xhr.send(null);
 }
 
-//document.getElementById("myBtn").addEventListener("mouseout", someOtherFunction);
+

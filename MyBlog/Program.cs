@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -23,5 +24,7 @@ namespace MyBlog
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+       
     }
 }

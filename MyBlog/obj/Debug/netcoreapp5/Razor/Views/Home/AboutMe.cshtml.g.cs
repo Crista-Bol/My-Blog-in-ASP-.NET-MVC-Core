@@ -26,8 +26,15 @@ using MyBlog.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\ga_bo\source\repos\MyBlog\MyBlog\Views\_ViewImports.cshtml"
+using MyBlog.Extentions;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"9fbb4c11aa2d5279151d2273a664bfb0ed3699f3", @"/Views/Home/AboutMe.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"8b889b3f4308041dc292b61010b9c4781c7386c2", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"3343ff78042d9bf4160e78c93b503885db88699c", @"/Views/_ViewImports.cshtml")]
     public class Views_Home_AboutMe : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MyBlog.Models;
@@ -12,12 +13,13 @@ using System.Threading.Tasks;
 
 namespace MyBlog.Controllers
 {
-    
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
         private readonly WeatherClient weatherClient;
+
 
         public HomeController(ILogger<HomeController> logger,WeatherClient weatherClient)
         {
@@ -29,12 +31,12 @@ namespace MyBlog.Controllers
         {
             return View();
         }
-
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
         }
-
+        [AllowAnonymous]
         public IActionResult AboutMe()
         {
             return View();

@@ -1,5 +1,6 @@
 ﻿using MyBlog.Areas.Identity.Data;
 using MyBlog.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,6 +14,8 @@ namespace MyBlog.Repositories
         Task<IEnumerable<Comment>> GetCommentsAsync(int articleId);
 
         Task<Article> GetArticleAsync(int id);
+
+        Task<IEnumerable<Article>> GetArtsWithinTimeByCatId(int Id, int catId, DateTime dt);
 
         Task UpdateCommentAsync(Comment comment);
         Task<Comment> GetCommentAsync(int id);

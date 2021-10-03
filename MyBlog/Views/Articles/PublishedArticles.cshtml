@@ -51,8 +51,10 @@
             function () {
                 pageCount = 1;
 
-                if (pageCount >= @totalPages)
+                if (pageCount >= @totalPages) {
+                    $("#moreArticles").html("No more articles >>");
                     $("#moreArticles").addClass("disabled");
+                }
 
                 $("#artDiv").empty();
                 load(pageCount);
@@ -78,9 +80,10 @@
 
         $("#moreArticles").on("click", function () {
             pageCount++;
-            if (pageCount >=@totalPages)
+            if (pageCount >=@totalPages) {
+                $("#moreArticles").html("No more articles >>");
                 $("#moreArticles").addClass("disabled");
-
+            }
             load(pageCount);
         });
 

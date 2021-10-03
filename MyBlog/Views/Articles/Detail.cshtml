@@ -4,7 +4,8 @@
     ViewData["Title"] = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var publishedDate = ViewData["publishedDate"];
-    var val = (User.Identity.IsAuthenticated)?User.Identity.Name:"";
+    var lastSameArts=(IEnumerable<Article>)ViewData["lastSameArts"];
+    var userName = (User.Identity.IsAuthenticated)?User.Identity.Name:"";
     var disable = (User.Identity.IsAuthenticated)?"disabled":"";
 }
 <div class="container mt-2">
@@ -22,8 +23,15 @@
                         <span id="readingTime" class="time"></span>
 
                     </div>
-                    <a class="badge bg-secondary text-decoration-none btn-link text-white" href="#!">Web Design</a>
-                    <a class="badge bg-secondary text-decoration-none text-white" href="#!">Freebies</a>
+                    @if (lastSameArts != null)
+                    {
+
+                        foreach (var lastArt in lastSameArts)
+                        {
+                            <a class="badge bg-secondary text-decoration-none btn-link text-white" href="/Articles/Detail?Id=@lastArt.Id">@lastArt.Header</a>
+                        }
+                    }
+
                 </header>
 
                 <div class="blog-post-body">
@@ -46,7 +54,7 @@
                             </div>
                             <div class="row">
                                 
-                                <input type="text" class="form-control mb-1 col-8 mr-2" @disable id="cmr" name="Commenter" value="@val" placeholder="Please write your name." />
+                                <input type="text" class="form-control mb-1 col-8 mr-2" @disable id="cmr" name="Commenter" value="@userName" placeholder="Please write your name." />
                                                                 
                                 <a id="sendButton" class="btn btn-primary text-white form-control col-2" onclick=addComment(@Model.Article.Id)>Send</a>
                             </div>
