@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-md-4" style="z-index: 1">
-            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <form method="post" asp-route-returnUrl="@Model.ReturnUrl" >
                 <h5 class="pt-2">Create a new account.</h5>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -40,7 +40,7 @@
                 </div>
                 
                               
-                <button type="submit" class="btn btn-primary">Register</button>
+                <input type="submit" class="btn btn-primary"/>
             </form>
     </div>
     <div class="col-md-6 col-md-offset-2">

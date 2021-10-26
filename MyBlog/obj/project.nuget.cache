@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "BViknqU4NB5x20Y8gO7YDzD8ApuLjvu3vSGcEtAnJ0eixPvJ1wo35w9dR1CqhsmFBOR6u4cs8J5n2CoBZOPSFA==",
+  "dgSpecHash": "WleNG/UE9BeAt1GgwGWrWF3kapR+9P+9h1nxWKjYDH0Au5lbMG0ZwaQI1QVzK6/QVSatTHYw7sSNDGvuIg9gEw==",
   "success": true,
   "projectFilePath": "C:\\Users\\ga_bo\\source\\repos\\MyBlog\\MyBlog\\MyBlog.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ga_bo\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
     "C:\\Users\\ga_bo\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\ga_bo\\.nuget\\packages\\microsoft.aspnet.razor\\3.2.7\\microsoft.aspnet.razor.3.2.7.nupkg.sha512",
     "C:\\Users\\ga_bo\\.nuget\\packages\\microsoft.aspnet.webpages\\3.2.7\\microsoft.aspnet.webpages.3.2.7.nupkg.sha512",

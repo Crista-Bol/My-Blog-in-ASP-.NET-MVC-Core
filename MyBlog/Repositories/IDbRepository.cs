@@ -11,6 +11,7 @@ namespace MyBlog.Repositories
         Task<int> GetArticlesCountAsync(bool? published);
 
         Task<IEnumerable<Article>> GetArticlesAsync(bool? published, int pageIndex, int pageSize);
+        Task<IEnumerable<PubArtView>> GetPubArtsViewAsync(bool? published, int pageIndex, int pageSize,string searchVal);
         Task<IEnumerable<Comment>> GetCommentsAsync(int articleId);
 
         Task<Article> GetArticleAsync(int id);

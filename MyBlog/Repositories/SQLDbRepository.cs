@@ -40,6 +40,30 @@ namespace MyBlog.Repositories
              : (await _db.Articles.OrderByDescending(a => a.Created_Date)
                                  .ToListAsync());
         }
+
+        public async Task<IEnumerable<PubArtView>> GetPubArtsViewAsync(bool? published, int pageIndex, int pageSize,string searchVal)
+        {
+            return (pageSize != 0) ? ((published != null && published == true) ?
+                    await _db.Articles.Where(a => a.Published_Date != null && (searchVal!=null && (a.Header.Contains(searchVal) || a.Body.Contains(searchVal))))
+                                      .OrderByDescending(a => a.Created_Date)
+                                      .Include(a=>a.Comments)
+                                      .Skip((pageIndex - 1) * pageSize)
+                                      .Take(pageSize)
+                                      .Select(a => new PubArtView{ Id=a.Id, Image=a.Image, Header=a.Header, PubDate=a.Published_Date, Body=a.Body, ComCount=a.Comments.Count})
+                                      .ToListAsync():
+                    await _db.Articles.Where(a=> searchVal != null && (a.Header.Contains(searchVal) || a.Body.Contains(searchVal)))
+                                  .OrderByDescending(a => a.Created_Date)
+                                  .Include(a => a.Comments)
+                                  .Skip((pageIndex - 1) * pageSize)
+                                  .Take(pageSize)
+                                  .Select(a => new PubArtView { Id = a.Id, Image = a.Image, Header = a.Header, PubDate = a.Published_Date, Body = a.Body, ComCount = a.Comments.Count })
+                                  .ToListAsync())
+             : (await _db.Articles.Where(a => searchVal != null && (a.Header.Contains(searchVal) || a.Body.Contains(searchVal)))
+                                  .OrderByDescending(a => a.Created_Date)
+                                  .Include(a => a.Comments)
+                                  .Select(a => new PubArtView { Id = a.Id, Image = a.Image, Header = a.Header, PubDate = a.Published_Date, Body = a.Body, ComCount = a.Comments.Count })
+                                  .ToListAsync());
+        }
         public async Task<IEnumerable<Comment>> GetCommentsAsync(int articleId)
         {
             return await _db.Comments.Where(cm=>cm.ArticleId== articleId).OrderBy(cm=>cm.Date).ToListAsync();

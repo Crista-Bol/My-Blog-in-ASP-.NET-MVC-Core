@@ -459,3 +459,4 @@ C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Admi
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Admin\EditUserRole.cshtml.g.cs
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Articles\UpsertArtCat.cshtml.g.cs
 C:\Users\ga_bo\source\repos\MyBlog\MyBlog\obj\Debug\netcoreapp5\Razor\Views\Articles\ArtCategories.cshtml.g.cs
+C:\Users\ga_bo\source\repos\MyBlog\MyBlog\bin\Debug\netcoreapp5\Dapper.dll

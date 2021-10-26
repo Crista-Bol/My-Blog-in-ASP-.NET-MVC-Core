@@ -59,6 +59,7 @@ namespace MyBlog
                             builder => builder.RequireRole("Admin", "Manager"));
             });
             services.AddHttpClient<WeatherClient>();
+            services.AddHttpClient("artCat", config => config.BaseAddress = new System.Uri("http://localhost:23072"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

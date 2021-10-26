@@ -5,17 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MyBlog.Models;
 using MyBlog.Repositories;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Helpers;
 
 namespace MyBlog.Controllers
 {
-    [Authorize]
+    
     public class ArticlesController : Controller
     {
 
@@ -26,6 +28,7 @@ namespace MyBlog.Controllers
         
         
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IHttpClientFactory httpClientFactory;
 
         [BindProperty]
         public IFormFile ArticleImage { get; set; }
@@ -39,11 +42,12 @@ namespace MyBlog.Controllers
         public ArticleCategory artCategory { get; set; }
 
         //private int pageCount { get; set; }
-        public ArticlesController(IDbRepository repository, IWebHostEnvironment hostEnvironment)
+        public ArticlesController(IDbRepository repository, IWebHostEnvironment hostEnvironment, IHttpClientFactory httpClientFactory)
         {
             pageSize = 10;
             this.repository = repository;
             this.webHostEnvironment = hostEnvironment;
+            this.httpClientFactory = httpClientFactory;
         }
 
         public IActionResult Index()
@@ -213,15 +217,15 @@ namespace MyBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> getAll()
         {
-            return Json(new { data = await repository.GetArticlesAsync(null,0,0)});
+            return Json(new { data = await repository.GetPubArtsViewAsync(null,0,0,"")});
         }
 
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> moreArticles(int pageCount) {
+        public async Task<IActionResult> moreArticles(int pageCount,string searchVal) {
             
-            return Json(new { data= await repository.GetArticlesAsync(true, pageCount,pageSize) });
+            return Json(new { data= await repository.GetPubArtsViewAsync(true, pageCount,pageSize,searchVal) });
         }
         
         [HttpDelete]
@@ -257,8 +261,13 @@ namespace MyBlog.Controllers
 
 
         public async Task<IActionResult> ArtCategories() {
-            var artCategories = await repository.getArtCategoriesAsync();
-            return View(artCategories);
+
+            using var client = httpClientFactory.CreateClient("artCat");
+            var response = await client.GetAsync("/api/artCats");
+            var data = await response.Content.ReadAsStringAsync();
+            var artCategories = JsonConvert.DeserializeObject<ArticleCategory[]>(data);
+            //var artCategories = await repository.getArtCategoriesAsync();
+            return View(artCategories);// JsonConvert.DeserializeObject<ArticleCategory[]>(data);
         }
 
         public async Task<IActionResult> UpsertArtCat(int id) {

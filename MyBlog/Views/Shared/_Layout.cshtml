@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MyBlog</title>
+    <title>@ViewData["Title"] Crista's Blog</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/PublishedArticleTheme.css" />
@@ -20,7 +20,7 @@
         
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-controller="Articles" asp-action="PublishedArticles">MyBlog</a>
+                <a class="navbar-brand" asp-controller="Articles" asp-action="PublishedArticles">Crista's Blog</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -29,17 +29,17 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark @Html.ActiveClass("Articles","PublishedArticles,Detail")" asp-controller="Articles" asp-action="PublishedArticles">Home</a>
-                           
-                        </li>
 
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark @Html.ActiveClass("Articles","ArtCategories,UpsertArtCat")" asp-controller="Articles" asp-action="ArtCategories">Category</a>
+                        </li>
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark @Html.ActiveClass("Articles","Index,Upsert")" asp-controller="Articles" asp-action="Index">Articles</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark @Html.ActiveClass("Articles","ArtCategories,UpsertArtCat")" asp-controller="Articles" asp-action="ArtCategories">Category</a>
-                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark @Html.ActiveClass("Admin","Index,Create")" asp-controller="Admin" asp-action="Index">Role</a>
                             </li>
@@ -53,6 +53,12 @@
                     </ul>
 
                 </div>
+                @if(Html.ActiveClass("Articles", "PublishedArticles") == "active") { 
+                    <div class="px-2" style="width:300px">
+                        <input id="search" class="form-control" type="text" placeholder="Search here ..." />
+                    </div>
+                }
+                
                 <div id="weather"></div>
 
                 <partial name="_LoginPartial.cshtml" />
@@ -68,14 +74,18 @@
 
     <footer class="footer text-center py-2 theme-bg-dark">
         <div class="copyright">
-            &copy; 2021 - MyBlog <i class="fas fa-heart" style="color: #fb866a;"></i> - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - Crista's Blog <i class="fas fa-heart" style="color: #fb866a;"></i> - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/PublishedArtList.js" asp-append-version="true"></script>
+    
     <script>
         const weatherHost = @Json.Serialize(@Configuration.GetSection("WeatherServiceSettings").GetSection("OpenWeatherHost").Value);
         const weatherAPIKey = @Json.Serialize(@Configuration.GetSection("WeatherServiceSettings").GetSection("ApiKey").Value);
+
+        
     </script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>

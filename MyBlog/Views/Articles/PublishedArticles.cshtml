@@ -1,10 +1,9 @@
 ﻿@model IEnumerable<MyBlog.Models.Article>
-@{ 
-    var totalPages = ViewBag.totalPages;
-}
+
 
 <div class="profile-side">
     <h1 class="blog-name pt-lg-4 mb-0">Crista's Blog</h1>
+    <input id="totalPages" type="hidden" value="@ViewBag.totalPages"/>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -23,9 +22,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="index.html"><i class="fas fa-home fa-fw mr-2"></i>Blog Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                @*<li class="nav-item">
                     <a class="nav-link" href="blog-post.html"><i class="fas fa-bookmark fa-fw mr-2"></i>Blog Post</a>
-                </li>
+                </li>*@
                 <li class="nav-item">
                     <a class="nav-link" href="about.html"><i class="fas fa-user fa-fw mr-2"></i>About Me</a>
                 </li>
@@ -45,66 +44,7 @@
     </section>
 </div>
 @section Scripts{
-    <script>
-        var pageCount;
-        $(document).ready(
-            function () {
-                pageCount = 1;
-
-                if (pageCount >= @totalPages) {
-                    $("#moreArticles").html("No more articles >>");
-                    $("#moreArticles").addClass("disabled");
-                }
-
-                $("#artDiv").empty();
-                load(pageCount);
-            });
-
-        function load(pageCount) {
-            $.ajax({
-                type: "GET",
-                url: "/Articles/moreArticles?pageCount=" + pageCount,
-                dataType: "json",
-                success: function (data) {
-
-                    $.each(data.data, function () {
-                        body = (this.body.length) > 150 ? this.body.substring(0, 150) : this.body;
-                        pubDate = new Date(this.published_Date);
-
-                        $("#artDiv").append(
-                            drawArticle(this.image, this.id, this.header, pubDate.toLocaleDateString("en-US"), body));
-                    });
-                }
-            });
-        }
-
-        $("#moreArticles").on("click", function () {
-            pageCount++;
-            if (pageCount >=@totalPages) {
-                $("#moreArticles").html("No more articles >>");
-                $("#moreArticles").addClass("disabled");
-            }
-            load(pageCount);
-        });
-
-        function drawArticle(img, id, header, publishedDate, body) {
-
-            return `<div class="item mb-5">
-                            <div class="media">
-                                <img class="mr-3 img-fluid post-thumb d-md-flex" src="/img/${img}" alt="image" />
-                                <div class="media-body">
-                                    <h3 class="title mb-1"><a href="Articles/Detail?Id=${id}">${header}</a></h3>
-                                    <div class="meta mb-1"><span class="date">Published ${publishedDate}</span><span class="time">5 min read</span><span class="comment"><a href="#">4 comments</a></span></div>
-                                    <div class="intro">
-                                        ${body}
-                                    </div>
-                                    <a class="more-link" href="Articles/Detail?Id=${id}">Read more &rarr;</a>
-
-                                </div>
-                            </div>
-                        </div>`;
-        }
-
+    <script src="~/js/PublishedArtList.js">
     </script>
 }
 
