@@ -2,7 +2,7 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
-    var roles = (List<IdentityRole>)ViewData["roles"];
+    @*var roles = (List<IdentityRole>)ViewData["roles"];*@
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -15,26 +15,26 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="reg-form-group">
                     <label name="firstName"><i class="fas fa-user"></i></label>
-                    <input asp-for="Input.FirstName" name="firstName" class="borderless-input" placeholder="First Name"/>
+                    <input asp-for="Input.FirstName" class="borderless-input" placeholder="First Name"/>
                     <span asp-validation-for="Input.FirstName" class="text-danger"></span>
                 </div>
                 <div class="reg-form-group">
                     <label name="lastName"><i class="fas fa-user-friends"></i></label>
-                    <input asp-for="Input.LastName" name="lastName" class="borderless-input" placeholder="Last Name"/>
+                    <input asp-for="Input.LastName" class="borderless-input" placeholder="Last Name"/>
                     <span asp-validation-for="Input.LastName" class="text-danger"></span>
                 </div>
                 <div class="reg-form-group">
                     <label name="email"><i class="far fa-envelope"></i></label>
-                    <input asp-for="Input.Email" name="email" class="borderless-input" placeholder="Email"/>
+                    <input asp-for="Input.Email" class="borderless-input" placeholder="Email"/>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="reg-form-group">
                     <label name="password"><i class="fas fa-key"></i></label>
-                    <input asp-for="Input.Password" name="password" class="borderless-input" placeholder="Password" />
+                    <input asp-for="Input.Password" class="borderless-input" placeholder="Password" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="reg-form-group">
-                    <label name="confirmPass"><i class="fas fa-key"></i></i></label>
+                    <label name="confirmPass"><i class="fas fa-key"></i></label>
                     <input asp-for="Input.ConfirmPassword" class="borderless-input" placeholder="Confirm password"/>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>

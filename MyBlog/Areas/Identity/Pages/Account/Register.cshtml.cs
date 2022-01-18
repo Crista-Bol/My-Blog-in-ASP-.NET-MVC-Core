@@ -26,8 +26,6 @@ namespace MyBlog.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         
-        
-
         public RegisterModel(
             UserManager<MyBlogUser> userManager,
             SignInManager<MyBlogUser> signInManager,
@@ -45,8 +43,7 @@ namespace MyBlog.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
-        
+              
 
         public class InputModel
         {
@@ -92,7 +89,7 @@ namespace MyBlog.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl = returnUrl ?? Url.Content("~/");
 
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -101,14 +98,14 @@ namespace MyBlog.Areas.Identity.Pages.Account
                 var user = new MyBlogUser { UserName = Input.Email, Email = Input.Email, FirstName=Input.FirstName, LastName=Input.LastName };
 
                 //Checking same username and email
-                var existingUser=await _userManager.FindByEmailAsync(Input.Email);
+                /*var existingUser=await _userManager.FindByEmailAsync(Input.Email);
                 
                 if (existingUser != null)
                 {
                     ModelState.AddModelError(string.Empty, "Duplicated email!!!");
                 }
                 else
-                {
+                {*/
                     var result = await _userManager.CreateAsync(user, Input.Password);
 
                     if (result.Succeeded)
@@ -142,7 +139,7 @@ namespace MyBlog.Areas.Identity.Pages.Account
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
-                }
+                //}
             //}
 
             
