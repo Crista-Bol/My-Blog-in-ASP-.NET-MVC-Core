@@ -17,5 +17,6 @@ namespace MyBlog.Models
 
         public string Body { get; set; }
 
+        public int CatId { get; set; }
     }
 }

@@ -269,6 +269,12 @@ namespace MyBlog.Controllers
             //var artCategories = await repository.getArtCategoriesAsync();
             return View(artCategories);// JsonConvert.DeserializeObject<ArticleCategory[]>(data);
         }
+        [Route("api/artCats")]
+        public async Task<ArticleCategory[]> ArtCats()
+        {
+            var artCategories = await repository.getArtCategoriesAsync();
+            return artCategories.ToArray();//Json( new { data=artCategories });            
+        }
 
         public async Task<IActionResult> UpsertArtCat(int id) {
 

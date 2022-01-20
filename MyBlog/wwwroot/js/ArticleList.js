@@ -35,7 +35,7 @@ function loadDataTable() {
                 "width": "10%"
             },
             {
-                "data": "published_Date",
+                "data": "pubDate",
                 "render": function (data) {
                     return `${getFormattedDate(data)}`;  
                 },
