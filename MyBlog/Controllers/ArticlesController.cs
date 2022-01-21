@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MyBlog.Models;
 using MyBlog.Repositories;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -159,6 +160,17 @@ namespace MyBlog.Controllers
         }
 
         [HttpPost]
+        [Route("api/addArticle")]
+        public async Task<IActionResult> AddArticle([FromBody] Article art) {
+            
+            await repository.CreateArticleAsync(art);
+            return CreatedAtAction(nameof(GetArticle),new { id = art.Id}, art);
+        }
+        public  Article GetArticle(int Id) {
+            Article art= new Article();
+            return art;
+        }
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert()
         {
@@ -209,9 +221,8 @@ namespace MyBlog.Controllers
                     ArticleView.Article.Created_Date=DateTime.Now;
                    await repository.CreateArticleAsync(ArticleView.Article);
                 }
-                return RedirectToAction("Index");
+            return RedirectToAction("Index");
           
-            return View(ArticleView);
         }
 
         [HttpGet]
