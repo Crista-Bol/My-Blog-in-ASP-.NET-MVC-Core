@@ -160,16 +160,25 @@ namespace MyBlog.Controllers
         }
 
         [HttpPost]
-        [Route("api/addArticle")]
+        [Route("api/[action]")]
         public async Task<IActionResult> AddArticle([FromBody] Article art) {
             
             await repository.CreateArticleAsync(art);
             return CreatedAtAction(nameof(GetArticle),new { id = art.Id}, art);
         }
-        public  Article GetArticle(int Id) {
-            Article art= new Article();
-            return art;
+        [HttpGet]
+        [Route("api/{id?}")]
+        public  async Task<IActionResult> GetArticle(int id) {
+            return Json(new { data = await repository.GetArticleAsync((int)id) });
         }
+        [HttpPut]
+        [Route("api/[action]/{id?}")]
+        public async Task<IActionResult> UpdateArticle([FromBody]Article art)
+        {
+            await repository.UpdateArticleAsync(art);
+            return CreatedAtAction(nameof(GetArticle), new { id = art.Id }, art);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert()
@@ -255,6 +264,7 @@ namespace MyBlog.Controllers
         }
 
         [HttpDelete]
+        [Route("api/deleteArticle/{id?}")]
         public async Task<IActionResult> Delete(int Id) {
 
             Article article=await repository.GetArticleAsync(Id);
